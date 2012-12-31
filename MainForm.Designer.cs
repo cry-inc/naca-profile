@@ -1,4 +1,4 @@
-﻿namespace naca_profile
+﻿namespace NacaProfile
 {
     partial class MainForm
     {
@@ -28,20 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.profilePanel = new ProfilePanel();
             this.SuspendLayout();
+            // 
+            // profilePanel
+            // 
+            this.profilePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.profilePanel.Location = new System.Drawing.Point(4, 4);
+            this.profilePanel.Name = "profilePanel";
+            this.profilePanel.Profile = null;
+            this.profilePanel.Size = new System.Drawing.Size(600, 600);
+            this.profilePanel.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(809, 472);
+            this.ClientSize = new System.Drawing.Size(752, 607);
+            this.Controls.Add(this.profilePanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainForm";
             this.Text = "Profilverteilung";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private ProfilePanel profilePanel;
     }
 }
 

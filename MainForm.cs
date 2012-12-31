@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace naca_profile
+namespace NacaProfile
 {
     /*
      * http://www.ppart.de/aerodynamics/profiles/NACA4.html
      * NACA4415
-     * points: 100
+     * points: 50
      * distribution: 2
      * 
      * TODO:
@@ -25,6 +25,12 @@ namespace naca_profile
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            Profile profile = new Profile("profile.txt", "probes.txt");
+            profilePanel.Profile = profile;
         }
     }
 }

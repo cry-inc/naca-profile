@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace naca_profile
+namespace NacaProfile
 {
     static class Program
     {
