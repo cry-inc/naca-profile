@@ -96,7 +96,7 @@ namespace NacaProfile
         private void FindMinMax()
         {
             if (points.Count < 1)
-                throw new Exception("No points!");
+                throw new InvalidOperationException("Found no points!");
 
             minX = maxX = points[0].X;
             minY = maxY = points[0].Y;
@@ -108,6 +108,28 @@ namespace NacaProfile
                 if (points[i].X < minX) minX = points[i].X;
                 if (points[i].Y < minY) minY = points[i].Y;
             }
+        }
+
+        public PointF GetRelativePoint(int index, int offset)
+        {
+            int pos = index + offset;
+            while (pos >= points.Count) pos -= points.Count;
+            while (pos < 0) pos += points.Count;
+            return points[pos];
+        }
+
+        public PointF EstimateNormalVector(int index)
+        {
+            if (index < 0 || index >= points.Count)
+                throw new IndexOutOfRangeException();
+
+            PointF pb = GetRelativePoint(index, -1);
+            PointF pa = GetRelativePoint(index, +1);
+
+            float dx= pa.X - pb.X;
+            float dy = pa.Y - pb.Y;
+
+            return new PointF(dy, -dx);
         }
     }
 }
