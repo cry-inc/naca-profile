@@ -10,11 +10,39 @@ namespace NacaProfile
     {
         private Profile profile;
         private RectangleF rect = new RectangleF(-0.25f, -0.75f, 1.5f, 1.5f);
+        private bool showFields = false;
+        private bool showProbes = false;
+        private bool showValues = false;
+        private bool showNormals = false;
 
         public Profile Profile
         {
             get { return profile; }
             set { profile = value; }
+        }
+
+        public bool ShowField
+        {
+            get { return showFields; }
+            set { showFields = value; Invalidate(); }
+        }
+
+        public bool ShowProbes
+        {
+            get { return showProbes; }
+            set { showProbes = value; Invalidate(); }
+        }
+
+        public bool ShowValues
+        {
+            get { return showValues; }
+            set { showValues = value; Invalidate(); }
+        }
+
+        public bool ShowNormals
+        {
+            get { return showNormals; }
+            set { showNormals = value; Invalidate(); }
         }
 
         public ProfilePanel()
@@ -63,25 +91,26 @@ namespace NacaProfile
                 normalPoint = ToScreenCoords(normalPoint);
                 Pen pen = new Pen(Color.Red);
                 pen.EndCap = LineCap.ArrowAnchor;
-                g.DrawLine(pen, points[i], normalPoint);
+                if (showNormals) g.DrawLine(pen, points[i], normalPoint);
 
                 float value = (float)Math.Sin(i/5.0f);
                 if (value < 0) value *= -1;
                 PointF p = new PointF(profile.Points[i].X + normalVector.X * value, profile.Points[i].Y + normalVector.Y * value);
                 values[i] = ToScreenCoords(p);
-                DrawDot(g, Color.Blue, values[i], 2);
+                if (showValues) DrawDot(g, Color.Blue, values[i], 2);
 
             }
+
+            if (showFields) g.FillPolygon(new SolidBrush(Color.FromArgb(125, Color.LightBlue)), values);
             g.FillPolygon(Brushes.Green, points);
             g.DrawPolygon(Pens.Black, points);
-            g.DrawLines(Pens.Blue, values);
 
             PointF[] probeNormalPoints = new PointF[profile.Probes.Count];
             for (int i = 0; i < probeNormalPoints.Length; i++)
             {
                 probeNormalPoints[i] = ToScreenCoords(profile.Probes[i].NormalPoint);
                 int index = profile.Probes[i].Index;
-                DrawDot(g, Color.Red, points[index], 3);
+                if (showProbes) DrawDot(g, Color.Red, points[index], 3);
             }
         }
     }

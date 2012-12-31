@@ -32,5 +32,42 @@ namespace NacaProfile
             Profile profile = new Profile("profile.txt", "probes.txt");
             profilePanel.Profile = profile;
         }
+
+        private void checkBoxFields_CheckedChanged(object sender, EventArgs e)
+        {
+            profilePanel.ShowField = checkBoxFields.Checked;
+        }
+
+        private void checkBoxNormals_CheckedChanged(object sender, EventArgs e)
+        {
+            profilePanel.ShowNormals = checkBoxNormals.Checked;
+        }
+
+        private void checkBoxProbes_CheckedChanged(object sender, EventArgs e)
+        {
+            profilePanel.ShowProbes = checkBoxProbes.Checked;
+        }
+
+        private void checkBoxValues_CheckedChanged(object sender, EventArgs e)
+        {
+            profilePanel.ShowValues = checkBoxValues.Checked;
+        }
+
+        private void buttonValues_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Noch nicht verfügbar!");
+        }
+
+        private void buttonExportPng_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "PNG-Grafik|*.png";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Bitmap bmp = new Bitmap(profilePanel.Width, profilePanel.Height);
+                profilePanel.DrawToBitmap(bmp, new Rectangle(0, 0, profilePanel.Width, profilePanel.Height));
+                ((Image)bmp).Save(dialog.FileName);
+            }
+        }
     }
 }
