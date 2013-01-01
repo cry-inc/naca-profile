@@ -42,6 +42,7 @@
             this.radioButtonPolygon = new System.Windows.Forms.RadioButton();
             this.radioButtonBezier = new System.Windows.Forms.RadioButton();
             this.profilePanel = new NacaProfile.ProfilePanel();
+            this.radioButtonSpline = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -158,7 +159,7 @@
             // checkBoxCentroid
             // 
             this.checkBoxCentroid.AutoSize = true;
-            this.checkBoxCentroid.Location = new System.Drawing.Point(610, 150);
+            this.checkBoxCentroid.Location = new System.Drawing.Point(610, 173);
             this.checkBoxCentroid.Name = "checkBoxCentroid";
             this.checkBoxCentroid.Size = new System.Drawing.Size(111, 17);
             this.checkBoxCentroid.TabIndex = 10;
@@ -169,7 +170,7 @@
             // checkBoxAntiAlias
             // 
             this.checkBoxAntiAlias.AutoSize = true;
-            this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 173);
+            this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 196);
             this.checkBoxAntiAlias.Name = "checkBoxAntiAlias";
             this.checkBoxAntiAlias.Size = new System.Drawing.Size(80, 17);
             this.checkBoxAntiAlias.TabIndex = 11;
@@ -218,11 +219,23 @@
             this.profilePanel.Size = new System.Drawing.Size(600, 600);
             this.profilePanel.TabIndex = 0;
             // 
+            // radioButtonSpline
+            // 
+            this.radioButtonSpline.AutoSize = true;
+            this.radioButtonSpline.Location = new System.Drawing.Point(610, 150);
+            this.radioButtonSpline.Name = "radioButtonSpline";
+            this.radioButtonSpline.Size = new System.Drawing.Size(114, 17);
+            this.radioButtonSpline.TabIndex = 14;
+            this.radioButtonSpline.Text = "Felder als PSplines";
+            this.radioButtonSpline.UseVisualStyleBackColor = true;
+            this.radioButtonSpline.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 607);
+            this.Controls.Add(this.radioButtonSpline);
             this.Controls.Add(this.radioButtonBezier);
             this.Controls.Add(this.radioButtonPolygon);
             this.Controls.Add(this.checkBoxAntiAlias);
@@ -263,6 +276,7 @@
         private System.Windows.Forms.CheckBox checkBoxAntiAlias;
         private System.Windows.Forms.RadioButton radioButtonPolygon;
         private System.Windows.Forms.RadioButton radioButtonBezier;
+        private System.Windows.Forms.RadioButton radioButtonSpline;
     }
 }
 

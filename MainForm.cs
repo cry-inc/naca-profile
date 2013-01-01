@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
@@ -117,6 +115,8 @@ namespace NacaProfile
         {
             if (radioButtonBezier.Checked)
                 profilePanel.FieldMode = FieldMode.Bezier;
+            else if (radioButtonSpline.Checked)
+                profilePanel.FieldMode = FieldMode.PSpline;
             else
                 profilePanel.FieldMode = FieldMode.Polygon;
         }

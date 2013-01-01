@@ -8,8 +8,9 @@ namespace NacaProfile
 {
     enum FieldMode
     {
+        Polygon,
         Bezier,
-        Polygon
+        PSpline
     }
 
     class Segment
@@ -146,18 +147,6 @@ namespace NacaProfile
             g.DrawLine(pen, p1, p2);
         }
 
-        private void DrawFieldSegment(Graphics g, bool negative, PointF[] segmentPoints)
-        {
-            Brush brush = new SolidBrush(Color.FromArgb(125, Color.LightBlue));
-            if (negative)
-                brush = new SolidBrush(Color.FromArgb(125, Color.LightPink));
-
-            if (fieldMode == FieldMode.Bezier)
-                g.FillPolygon(brush, Bezier.CreateBezierPath(segmentPoints));
-            else
-                g.FillPolygon(brush, segmentPoints);
-        }
-
         private PointF ToScreenCoords(PointF p)
         {
             float xd = Width / rect.Width;
@@ -268,6 +257,20 @@ namespace NacaProfile
                 // Draw the polygon
                 DrawFieldSegment(g, segments[j].Negative, segmentPoints.ToArray());
             }
+        }
+
+        private void DrawFieldSegment(Graphics g, bool negative, PointF[] segmentPoints)
+        {
+            Brush brush = new SolidBrush(Color.FromArgb(125, Color.LightBlue));
+            if (negative)
+                brush = new SolidBrush(Color.FromArgb(125, Color.LightPink));
+
+            if (fieldMode == FieldMode.Bezier)
+                g.FillPolygon(brush, Bezier.CreateBezierPath(segmentPoints));
+            else if (fieldMode == FieldMode.PSpline)
+                g.FillPolygon(brush, Spline.CreateSplinePath(segmentPoints));
+            else
+                g.FillPolygon(brush, segmentPoints);
         }
 
         private List<Segment> CreateDataSegments()
