@@ -111,9 +111,16 @@ namespace NacaProfile
             }
         }
 
-        private void DrawDot(Graphics g, Color c, PointF pos, int radius)
+        private void DrawDot(Graphics g, Color c, PointF pos, int radius = 3)
         {
             g.FillEllipse(new SolidBrush(c), new RectangleF(pos.X - radius, pos.Y - radius, radius * 2, radius * 2));
+        }
+
+        private void DrawArrow(Graphics g, Color c, PointF p1, PointF p2, int thinkness = 1)
+        {
+            Pen pen = new Pen(c, thinkness);
+            pen.EndCap = LineCap.ArrowAnchor;
+            g.DrawLine(pen, p1, p2);
         }
 
         private PointF ToScreenCoords(PointF p)
@@ -152,9 +159,7 @@ namespace NacaProfile
                 normalPoint = ToScreenCoords(normalPoint);
 
                 // Draw normal vector
-                Pen pen = new Pen(Color.Red);
-                pen.EndCap = LineCap.ArrowAnchor;
-                if (showNormals) g.DrawLine(pen, points[index], normalPoint);
+                if (showNormals) DrawArrow(g, Color.Red, points[index], normalPoint);
 
                 // Draw value Points
                 if (data.Length > i)
@@ -224,11 +229,46 @@ namespace NacaProfile
                 int before = segments[segment - 1].LastIndex;
                 int after = segments[segment].FirstIndex;
 
-                PointF p1 = profile.Points[profile.Probes[before].Index];
-                PointF p2 = profile.Points[profile.Probes[after].Index];
+                int i1 = profile.Probes[before].Index;
+                int i2 = profile.Probes[after].Index;
+                
+                float sum = Math.Abs(data[before]) + Math.Abs(data[after]);
+                float ratio = Math.Abs(data[before]) / sum;
 
-                return ToScreenCoords(new PointF((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2));
+                return ToScreenCoords(InterpolateWithRatio(i1, i2, ratio));
             }
+        }
+
+        private PointF InterpolateWithRatio(int i1, int i2, float ratio)
+        {
+            PointF p1 = profile.Points[i1];
+            PointF p2 = profile.Points[i2];
+
+            float sum = 0;
+            for (int i = i1; i < i2; i++) {
+                sum += VectorF.Vector(profile.Points[i], profile.Points[i+1]).Length();
+            }
+            float pos = sum * ratio;
+
+            int j = i1;
+            sum = 0;
+            while (true)
+            {
+                float tmp = VectorF.Vector(profile.Points[j], profile.Points[j + 1]).Length();
+                if (sum + tmp > pos)
+                    break;
+                else
+                    sum += tmp;
+                j++;
+            }
+
+            int indexBefore = j;
+            int indexAfter = j+1;
+            float rest = pos - sum;
+            VectorF vector = VectorF.Vector(profile.Points[indexBefore], profile.Points[indexAfter + 1]);
+            float length = vector.Length();
+            float vectorRatio = rest / length;
+            return profile.Points[indexBefore] + vector * vectorRatio;
         }
     }
 }

@@ -32,9 +32,14 @@ namespace NacaProfile
             this.y = y;
         }
 
+        public float Length()
+        {
+            return (float)Math.Sqrt(x * x + y * y);
+        }
+
         public VectorF Norm()
         {
-            float length = (float)Math.Sqrt(x*x + y*y);
+            float length = Length();
             return new VectorF(x / length, y / length);
         }
 
@@ -56,6 +61,11 @@ namespace NacaProfile
         public static PointF operator +(PointF p, VectorF v)
         {
             return new PointF(p.X + v.X, p.Y + v.Y);
+        }
+
+        public static VectorF Vector(PointF p1, PointF p2)
+        {
+            return new VectorF(p2.X - p1.X, p2.Y - p1.Y);
         }
 
         public static VectorF CalculateNormalVector(PointF p1, PointF p2)
