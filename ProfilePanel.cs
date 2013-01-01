@@ -120,7 +120,17 @@ namespace NacaProfile
 
             if (profile != null)
             {
-                DrawProfile(e.Graphics, profile);
+                PointF[] profilePoints = CalculateProfilePoints();
+                PointF[] probePoints = CalculateProbePoints(profilePoints);
+                VectorF[] probeNormals = CalculateProbeNormals();
+                PointF[] valuePoints = CalculateValuePoints(probePoints, probeNormals, data);
+
+                if (showFields) DrawFields(e.Graphics, data, valuePoints);
+                DrawProfile(e.Graphics, profilePoints);
+                if (showProbes) DrawProbes(e.Graphics, probePoints);
+                if (ShowNormals) DrawProbeNormals(e.Graphics, probePoints, probeNormals);
+                if (showValues) DrawValues(e.Graphics, valuePoints, data);
+                if (showCentroid) DrawDot(e.Graphics, Color.Black, ToScreenCoords(profile.Centroid), 3);
             }
         }
 
@@ -136,6 +146,18 @@ namespace NacaProfile
             g.DrawLine(pen, p1, p2);
         }
 
+        private void DrawFieldSegment(Graphics g, bool negative, PointF[] segmentPoints)
+        {
+            Brush brush = new SolidBrush(Color.FromArgb(125, Color.LightBlue));
+            if (negative)
+                brush = new SolidBrush(Color.FromArgb(125, Color.LightPink));
+
+            if (fieldMode == FieldMode.Bezier)
+                g.FillPolygon(brush, Bezier.CreateBezierPath(segmentPoints));
+            else
+                g.FillPolygon(brush, segmentPoints);
+        }
+
         private PointF ToScreenCoords(PointF p)
         {
             float xd = Width / rect.Width;
@@ -145,101 +167,130 @@ namespace NacaProfile
             return new PointF(p.X * xd + ox, -p.Y * yd + oy);
         }
 
-        private void DrawProfile(Graphics g, Profile profile)
+        private PointF[] CalculateProfilePoints()
         {
-            // Draw profile polygon
-            PointF[] points = new PointF[profile.Points.Count];
+            PointF[] profilePoints = new PointF[profile.Points.Count];
             for (int i = 0; i < profile.Points.Count; i++)
             {
-                points[i] = ToScreenCoords(profile.Points[i]);
+                profilePoints[i] = ToScreenCoords(profile.Points[i]);
             }
-            g.FillPolygon(Brushes.Green, points);
-            g.DrawPolygon(Pens.Black, points);
+            return profilePoints;
+        }
 
+        private PointF[] CalculateProbePoints(PointF[] profilePoints)
+        {
+            PointF[] probePoints = new PointF[profile.Probes.Count];
+            for (int i = 0; i < profile.Probes.Count; i++)
+            {
+                int index = profile.Probes[i].Index;
+                probePoints[i] = profilePoints[index];
+            }
+            return probePoints;
+        }
 
-            PointF[] probes = new PointF[profile.Probes.Count];
+        private VectorF[] CalculateProbeNormals()
+        {
             VectorF[] normals = new VectorF[profile.Probes.Count];
+            for (int i = 0; i < profile.Probes.Count; i++)
+            {
+                normals[i] = profile.Probes[i].NormalVector.Norm() * 0.15f;
+            }
+            return normals;
+        }
+
+        private PointF[] CalculateValuePoints(PointF[] probePoints, VectorF[] normals, float[] data)
+        {
             PointF[] valuePoints = new PointF[profile.Probes.Count];
             for (int i = 0; i < profile.Probes.Count; i++)
             {
-                // Probe position
+                float value = 0;
+                if (data.Length > i) value = data[i];
+                if (value < 0) value *= -1;
                 int index = profile.Probes[i].Index;
-                if (showProbes) DrawDot(g, Color.Red, points[index], 3);
-
-                // Normal vector at probe position
-                normals[i] = profile.Probes[i].NormalVector.Norm() * 0.15f;
-                PointF normalPoint = profile.Points[index] + normals[i];
-                normalPoint = ToScreenCoords(normalPoint);
-
-                // Draw normal vector
-                if (showNormals) DrawArrow(g, Color.Red, points[index], normalPoint);
-
-                // Draw value Points
-                if (data.Length > i)
-                {
-                    float value = data[i];
-                    if (value < 0) value *= -1;
-                    PointF valuePoint = profile.Points[index] + normals[i] * value;
-                    valuePoints[i] = ToScreenCoords(valuePoint);
-                    if (showValues) DrawDot(g, Color.Blue, valuePoints[i], 2);
-                }
+                valuePoints[i] = ToScreenCoords(profile.Points[index] + normals[i] * value);
             }
+            return valuePoints;
+        }
 
-            // Create polygon for fields
-            if (showFields && data != null && data.Length == profile.Probes.Count)
+        private void DrawProfile(Graphics g, PointF[] profilePoints)
+        {
+            g.FillPolygon(Brushes.Green, profilePoints);
+            g.DrawPolygon(Pens.Black, profilePoints);
+        }
+
+        private void DrawProbes(Graphics g, PointF[] probePoints)
+        {
+            for (int i = 0; i < probePoints.Length; i++)
+                DrawDot(g, Color.Red, probePoints[i], 3);
+        }
+
+        private void DrawProbeNormals(Graphics g, PointF[] probePoints, VectorF[] normals)
+        {
+            for (int i = 0; i < profile.Probes.Count; i++)
             {
-                List<Segment> segments = new List<Segment>();
-               
-                int i = 0;
-                int first = i;
-                int last = i;
-                bool negative = data[i] < 0;
-                i++;
-
-                while (i<data.Length)
-                {
-                    if (negative != data[i] < 0)
-                    {
-                        segments.Add(new Segment(first, last, negative));
-                        first = last = i;
-                        negative = data[i] < 0;
-                    }
-                    else
-                    {
-                        last = i;
-                    }
-                    i++;
-                }
-                segments.Add(new Segment(first, last, negative));
-
-                for (int j = 0; j < segments.Count; j++)
-                {
-                    List<PointF> segmentPoints = new List<PointF>();
-                    segmentPoints.Add(InterpolateFieldBorder(segments, j));
-                    for (int k = segments[j].FirstIndex; k <= segments[j].LastIndex; k++)
-                    {
-                        segmentPoints.Add(valuePoints[k]);
-                    }
-                    segmentPoints.Add(InterpolateFieldBorder(segments, j+1));
-
-                    Brush brush = new SolidBrush(Color.FromArgb(125, Color.LightBlue));
-                    if (segments[j].Negative)
-                        brush = new SolidBrush(Color.FromArgb(125, Color.LightPink));
-
-                    if (fieldMode == FieldMode.Bezier)
-                    {
-                        PointF[] field = Bezier.CreateBezierPath(segmentPoints.ToArray());
-                        g.FillPolygon(brush, field);
-                    }
-                    else
-                    {
-                        g.FillPolygon(brush, segmentPoints.ToArray());
-                    }
-                }
+                int index = profile.Probes[i].Index;
+                PointF normalPoint = profile.Points[index] + normals[i];
+                DrawArrow(g, Color.Red, probePoints[i], ToScreenCoords(normalPoint));
             }
+        }
 
-            // Draw centroid
-            if (showCentroid) DrawDot(g, Color.Black, ToScreenCoords(profile.Centroid), 3);
+        private void DrawValues(Graphics g, PointF[] valuePoints, float[] data)
+        {
+            for (int i = 0; i < profile.Probes.Count; i++)
+            {
+                DrawDot(g, Color.Blue, valuePoints[i], 2);
+                // TODO: Draw value as text?
+            }
+        }
+
+        public void DrawFields(Graphics g, float[] data, PointF[] valuePoints)
+        {
+            if (data != null && data.Length == profile.Probes.Count)
+            {
+                List<Segment> segments = CreateDataSegments();
+                DrawSegments(g, valuePoints, segments);
+            }
+        }
+
+        private void DrawSegments(Graphics g, PointF[] valuePoints, List<Segment> segments)
+        {
+            for (int j = 0; j < segments.Count; j++)
+            {
+                // Create segment points for polygon
+                List<PointF> segmentPoints = new List<PointF>();
+                segmentPoints.Add(InterpolateFieldBorder(segments, j));
+                for (int k = segments[j].FirstIndex; k <= segments[j].LastIndex; k++)
+                {
+                    segmentPoints.Add(valuePoints[k]);
+                }
+                segmentPoints.Add(InterpolateFieldBorder(segments, j + 1));
+
+                // Draw the polygon
+                DrawFieldSegment(g, segments[j].Negative, segmentPoints.ToArray());
+            }
+        }
+
+        private List<Segment> CreateDataSegments()
+        {
+            List<Segment> segments = new List<Segment>();
+            int i = 0;
+            int first = i;
+            int last = i;
+            bool negative = data[i] < 0;
+            i++;
+            while (i < data.Length)
+            {
+                if (negative != data[i] < 0)
+                {
+                    segments.Add(new Segment(first, last, negative));
+                    first = last = i;
+                    negative = data[i] < 0;
+                }
+                else last = i;
+                i++;
+            }
+            segments.Add(new Segment(first, last, negative));
+            return segments;
         }
 
         private PointF InterpolateFieldBorder(List<Segment> segments, int segment)
