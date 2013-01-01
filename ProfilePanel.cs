@@ -6,6 +6,12 @@ using System.Drawing.Drawing2D;
 
 namespace NacaProfile
 {
+    enum FieldMode
+    {
+        Bezier,
+        Polygon
+    }
+
     class Segment
     {
         public int FirstIndex;
@@ -31,6 +37,7 @@ namespace NacaProfile
         private bool showNormals = false;
         private bool showCentroid = false;
         private bool antiAlias = false;
+        private FieldMode fieldMode = FieldMode.Polygon;
 
         public Profile Profile
         {
@@ -78,6 +85,12 @@ namespace NacaProfile
         {
             get { return antiAlias; }
             set { antiAlias = value; Invalidate(); }
+        }
+
+        public FieldMode FieldMode
+        {
+            get { return fieldMode; }
+            set { fieldMode = value; Invalidate(); }
         }
 
         public ProfilePanel()
@@ -209,10 +222,19 @@ namespace NacaProfile
                     }
                     segmentPoints.Add(InterpolateFieldBorder(segments, j+1));
 
+                    Brush brush = new SolidBrush(Color.FromArgb(125, Color.LightBlue));
                     if (segments[j].Negative)
-                        g.FillPolygon(new SolidBrush(Color.FromArgb(125, Color.LightPink)), segmentPoints.ToArray());
+                        brush = new SolidBrush(Color.FromArgb(125, Color.LightPink));
+
+                    if (fieldMode == FieldMode.Bezier)
+                    {
+                        PointF[] field = Bezier.CreateBezierPath(segmentPoints.ToArray());
+                        g.FillPolygon(brush, field);
+                    }
                     else
-                        g.FillPolygon(new SolidBrush(Color.FromArgb(125, Color.LightBlue)), segmentPoints.ToArray());
+                    {
+                        g.FillPolygon(brush, segmentPoints.ToArray());
+                    }
                 }
             }
 
@@ -229,46 +251,14 @@ namespace NacaProfile
                 int before = segments[segment - 1].LastIndex;
                 int after = segments[segment].FirstIndex;
 
-                int i1 = profile.Probes[before].Index;
-                int i2 = profile.Probes[after].Index;
+                int index1 = profile.Probes[before].Index;
+                int index2 = profile.Probes[after].Index;
                 
                 float sum = Math.Abs(data[before]) + Math.Abs(data[after]);
                 float ratio = Math.Abs(data[before]) / sum;
 
-                return ToScreenCoords(InterpolateWithRatio(i1, i2, ratio));
+                return ToScreenCoords(profile.InterpolateNewPoint(index1, index2, ratio));
             }
-        }
-
-        private PointF InterpolateWithRatio(int i1, int i2, float ratio)
-        {
-            PointF p1 = profile.Points[i1];
-            PointF p2 = profile.Points[i2];
-
-            float sum = 0;
-            for (int i = i1; i < i2; i++) {
-                sum += VectorF.Vector(profile.Points[i], profile.Points[i+1]).Length();
-            }
-            float pos = sum * ratio;
-
-            int j = i1;
-            sum = 0;
-            while (true)
-            {
-                float tmp = VectorF.Vector(profile.Points[j], profile.Points[j + 1]).Length();
-                if (sum + tmp > pos)
-                    break;
-                else
-                    sum += tmp;
-                j++;
-            }
-
-            int indexBefore = j;
-            int indexAfter = j+1;
-            float rest = pos - sum;
-            VectorF vector = VectorF.Vector(profile.Points[indexBefore], profile.Points[indexAfter + 1]);
-            float length = vector.Length();
-            float vectorRatio = rest / length;
-            return profile.Points[indexBefore] + vector * vectorRatio;
         }
     }
 }

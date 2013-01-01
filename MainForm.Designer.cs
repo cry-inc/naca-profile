@@ -38,8 +38,10 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBoxCentroid = new System.Windows.Forms.CheckBox();
-            this.profilePanel = new NacaProfile.ProfilePanel();
             this.checkBoxAntiAlias = new System.Windows.Forms.CheckBox();
+            this.radioButtonPolygon = new System.Windows.Forms.RadioButton();
+            this.radioButtonBezier = new System.Windows.Forms.RadioButton();
+            this.profilePanel = new NacaProfile.ProfilePanel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,7 +109,7 @@
             // 
             // buttonExportPng
             // 
-            this.buttonExportPng.Location = new System.Drawing.Point(610, 259);
+            this.buttonExportPng.Location = new System.Drawing.Point(610, 338);
             this.buttonExportPng.Name = "buttonExportPng";
             this.buttonExportPng.Size = new System.Drawing.Size(130, 23);
             this.buttonExportPng.TabIndex = 7;
@@ -123,7 +125,7 @@
             0,
             0,
             65536});
-            this.numericUpDown1.Location = new System.Drawing.Point(693, 161);
+            this.numericUpDown1.Location = new System.Drawing.Point(693, 308);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10,
             0,
@@ -147,7 +149,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(610, 163);
+            this.label1.Location = new System.Drawing.Point(607, 310);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 9;
@@ -156,13 +158,48 @@
             // checkBoxCentroid
             // 
             this.checkBoxCentroid.AutoSize = true;
-            this.checkBoxCentroid.Location = new System.Drawing.Point(610, 104);
+            this.checkBoxCentroid.Location = new System.Drawing.Point(610, 150);
             this.checkBoxCentroid.Name = "checkBoxCentroid";
             this.checkBoxCentroid.Size = new System.Drawing.Size(111, 17);
             this.checkBoxCentroid.TabIndex = 10;
             this.checkBoxCentroid.Text = "Centroid anzeigen";
             this.checkBoxCentroid.UseVisualStyleBackColor = true;
             this.checkBoxCentroid.CheckedChanged += new System.EventHandler(this.checkBoxCentroid_CheckedChanged);
+            // 
+            // checkBoxAntiAlias
+            // 
+            this.checkBoxAntiAlias.AutoSize = true;
+            this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 173);
+            this.checkBoxAntiAlias.Name = "checkBoxAntiAlias";
+            this.checkBoxAntiAlias.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxAntiAlias.TabIndex = 11;
+            this.checkBoxAntiAlias.Text = "AntiAliasing";
+            this.checkBoxAntiAlias.UseVisualStyleBackColor = true;
+            this.checkBoxAntiAlias.CheckedChanged += new System.EventHandler(this.checkBoxAntiAlias_CheckedChanged);
+            // 
+            // radioButtonPolygon
+            // 
+            this.radioButtonPolygon.AutoSize = true;
+            this.radioButtonPolygon.Checked = true;
+            this.radioButtonPolygon.Location = new System.Drawing.Point(610, 104);
+            this.radioButtonPolygon.Name = "radioButtonPolygon";
+            this.radioButtonPolygon.Size = new System.Drawing.Size(117, 17);
+            this.radioButtonPolygon.TabIndex = 12;
+            this.radioButtonPolygon.TabStop = true;
+            this.radioButtonPolygon.Text = "Felder als Polygone";
+            this.radioButtonPolygon.UseVisualStyleBackColor = true;
+            this.radioButtonPolygon.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButtonBezier
+            // 
+            this.radioButtonBezier.AutoSize = true;
+            this.radioButtonBezier.Location = new System.Drawing.Point(610, 127);
+            this.radioButtonBezier.Name = "radioButtonBezier";
+            this.radioButtonBezier.Size = new System.Drawing.Size(135, 17);
+            this.radioButtonBezier.TabIndex = 13;
+            this.radioButtonBezier.Text = "Felder als Bezierkurven";
+            this.radioButtonBezier.UseVisualStyleBackColor = true;
+            this.radioButtonBezier.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // profilePanel
             // 
@@ -180,22 +217,13 @@
             this.profilePanel.Size = new System.Drawing.Size(600, 600);
             this.profilePanel.TabIndex = 0;
             // 
-            // checkBoxAntiAlias
-            // 
-            this.checkBoxAntiAlias.AutoSize = true;
-            this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 127);
-            this.checkBoxAntiAlias.Name = "checkBoxAntiAlias";
-            this.checkBoxAntiAlias.Size = new System.Drawing.Size(80, 17);
-            this.checkBoxAntiAlias.TabIndex = 11;
-            this.checkBoxAntiAlias.Text = "AntiAliasing";
-            this.checkBoxAntiAlias.UseVisualStyleBackColor = true;
-            this.checkBoxAntiAlias.CheckedChanged += new System.EventHandler(this.checkBoxAntiAlias_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 607);
+            this.Controls.Add(this.radioButtonBezier);
+            this.Controls.Add(this.radioButtonPolygon);
             this.Controls.Add(this.checkBoxAntiAlias);
             this.Controls.Add(this.checkBoxCentroid);
             this.Controls.Add(this.label1);
@@ -232,6 +260,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBoxCentroid;
         private System.Windows.Forms.CheckBox checkBoxAntiAlias;
+        private System.Windows.Forms.RadioButton radioButtonPolygon;
+        private System.Windows.Forms.RadioButton radioButtonBezier;
     }
 }
 

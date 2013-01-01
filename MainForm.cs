@@ -85,5 +85,13 @@ namespace NacaProfile
         {
             profilePanel.SetDummyData((float)numericUpDown1.Value);
         }
+
+        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonBezier.Checked)
+                profilePanel.FieldMode = FieldMode.Bezier;
+            else
+                profilePanel.FieldMode = FieldMode.Polygon;
+        }
     }
 }

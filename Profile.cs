@@ -151,5 +151,47 @@ namespace NacaProfile
             PointF p2 = GetRelativePoint(index, -1);
             return VectorF.CalculateNormalVector(p1, p2);
         }
+
+        public PointF InterpolateBetweenPoints(int indexBefore, int indexAfter, float ratio)
+        {
+            if (indexAfter != indexBefore + 1)
+                throw new ArgumentException("The two points must be adjacent!");
+
+            VectorF vector = VectorF.Vector(points[indexBefore], points[indexAfter]);
+            float length = vector.Length();
+            return points[indexBefore] + vector * ratio;
+        }
+
+        public PointF InterpolateNewPoint(int index1, int index2, float ratio)
+        {
+            if (index2 <= index1)
+                throw new ArgumentException("index2 must be greater than index1!");
+
+            PointF p1 = points[index1];
+            PointF p2 = points[index2];
+
+            float sum = 0;
+            for (int i = index1; i < index2; i++)
+                sum += VectorF.Vector(points[i], points[i + 1]).Length();
+            float pos = sum * ratio;
+
+            int j = index1;
+            sum = 0;
+            while (true)
+            {
+                float tmp = VectorF.Vector(points[j], points[j + 1]).Length();
+                if (sum + tmp > pos) break;
+                else sum += tmp;
+                j++;
+            }
+
+            int indexBefore = j;
+            int indexAfter = j + 1;
+            float rest = pos - sum;
+            float length = VectorF.Vector(points[indexBefore], points[indexAfter]).Length();
+            return InterpolateBetweenPoints(indexBefore, indexAfter, rest / length);
+        }
+
+
     }
 }
