@@ -37,7 +37,9 @@
             this.buttonExportPng = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxCentroid = new System.Windows.Forms.CheckBox();
             this.profilePanel = new NacaProfile.ProfilePanel();
+            this.checkBoxAntiAlias = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -151,13 +153,26 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Dummy Daten:";
             // 
+            // checkBoxCentroid
+            // 
+            this.checkBoxCentroid.AutoSize = true;
+            this.checkBoxCentroid.Location = new System.Drawing.Point(610, 104);
+            this.checkBoxCentroid.Name = "checkBoxCentroid";
+            this.checkBoxCentroid.Size = new System.Drawing.Size(111, 17);
+            this.checkBoxCentroid.TabIndex = 10;
+            this.checkBoxCentroid.Text = "Centroid anzeigen";
+            this.checkBoxCentroid.UseVisualStyleBackColor = true;
+            this.checkBoxCentroid.CheckedChanged += new System.EventHandler(this.checkBoxCentroid_CheckedChanged);
+            // 
             // profilePanel
             // 
+            this.profilePanel.AntiAliasing = false;
             this.profilePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.profilePanel.Data = new float[0];
             this.profilePanel.Location = new System.Drawing.Point(4, 4);
             this.profilePanel.Name = "profilePanel";
             this.profilePanel.Profile = null;
+            this.profilePanel.ShowCentroid = false;
             this.profilePanel.ShowField = false;
             this.profilePanel.ShowNormals = false;
             this.profilePanel.ShowProbes = false;
@@ -165,11 +180,24 @@
             this.profilePanel.Size = new System.Drawing.Size(600, 600);
             this.profilePanel.TabIndex = 0;
             // 
+            // checkBoxAntiAlias
+            // 
+            this.checkBoxAntiAlias.AutoSize = true;
+            this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 127);
+            this.checkBoxAntiAlias.Name = "checkBoxAntiAlias";
+            this.checkBoxAntiAlias.Size = new System.Drawing.Size(80, 17);
+            this.checkBoxAntiAlias.TabIndex = 11;
+            this.checkBoxAntiAlias.Text = "AntiAliasing";
+            this.checkBoxAntiAlias.UseVisualStyleBackColor = true;
+            this.checkBoxAntiAlias.CheckedChanged += new System.EventHandler(this.checkBoxAntiAlias_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 607);
+            this.Controls.Add(this.checkBoxAntiAlias);
+            this.Controls.Add(this.checkBoxCentroid);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.buttonExportPng);
@@ -202,6 +230,8 @@
         private System.Windows.Forms.Button buttonExportPng;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBoxCentroid;
+        private System.Windows.Forms.CheckBox checkBoxAntiAlias;
     }
 }
 

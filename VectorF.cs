@@ -57,5 +57,12 @@ namespace NacaProfile
         {
             return new PointF(p.X + v.X, p.Y + v.Y);
         }
+
+        public static VectorF CalculateNormalVector(PointF p1, PointF p2)
+        {
+            float dx = p1.X - p2.X;
+            float dy = p1.Y - p2.Y;
+            return new VectorF(dy, -dx);
+        }
     }
 }

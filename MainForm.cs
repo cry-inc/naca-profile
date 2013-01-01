@@ -54,6 +54,16 @@ namespace NacaProfile
             profilePanel.ShowValues = checkBoxValues.Checked;
         }
 
+        private void checkBoxCentroid_CheckedChanged(object sender, EventArgs e)
+        {
+            profilePanel.ShowCentroid = checkBoxCentroid.Checked;
+        }
+
+        private void checkBoxAntiAlias_CheckedChanged(object sender, EventArgs e)
+        {
+            profilePanel.AntiAliasing = checkBoxAntiAlias.Checked;
+        }
+
         private void buttonValues_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Noch nicht verfügbar!");

@@ -30,6 +30,8 @@ namespace NacaProfile
         private List<Probe> probes;
         private IFormatProvider format = CultureInfo.GetCultureInfo("en-US").NumberFormat;
         private float maxX, maxY, minX, minY;
+        private PointF centroid;
+        private float area;
 
         public List<PointF> Points
         { get { return points; } }
@@ -49,11 +51,37 @@ namespace NacaProfile
         public float MinimumY
         { get { return minY; } }
 
+        public PointF Centroid
+        { get { return centroid; } }
+
+        public float Area
+        { get { return area; } }
+
         public Profile(string profileFile, string probeFile)
         {
             points = ReadPointsFromFile(profileFile);
             probes = ReadProbesFromFile(probeFile);
             FindMinMax();
+            CalculateAreaAndCentroid();
+        }
+
+        public void CalculateAreaAndCentroid()
+        {
+            if (points.Count < 1)
+                throw new InvalidOperationException("Found no points!");
+
+            float sumX = 0, sumY = 0, a = 0;
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                float tmp = points[i].X * points[i + 1].Y - points[i + 1].X * points[i].Y;
+                sumX += (points[i].X + points[i + 1].X) * tmp;
+                sumY += (points[i].Y + points[i + 1].Y) * tmp;
+                a += tmp;
+            }
+
+            area *= 0.5f;
+            float factor = 1 / (6 * a);
+            centroid = new PointF(sumX * factor, sumY * factor);
         }
 
         private List<PointF> ReadPointsFromFile(string file)
@@ -106,7 +134,7 @@ namespace NacaProfile
             }
         }
 
-        public PointF GetRelativePoint(int index, int offset)
+        private PointF GetRelativePoint(int index, int offset)
         {
             int pos = index + offset;
             while (pos >= points.Count) pos -= points.Count;
@@ -114,18 +142,14 @@ namespace NacaProfile
             return points[pos];
         }
 
-        public VectorF EstimateNormalVector(int index)
+        private VectorF EstimateNormalVector(int index)
         {
             if (index < 0 || index >= points.Count)
                 throw new IndexOutOfRangeException();
 
-            PointF pb = GetRelativePoint(index, -1);
-            PointF pa = GetRelativePoint(index, +1);
-
-            float dx= pa.X - pb.X;
-            float dy = pa.Y - pb.Y;
-
-            return new VectorF(dy, -dx);
+            PointF p1 = GetRelativePoint(index, +1);
+            PointF p2 = GetRelativePoint(index, -1);
+            return VectorF.CalculateNormalVector(p1, p2);
         }
     }
 }

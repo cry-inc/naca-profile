@@ -29,6 +29,8 @@ namespace NacaProfile
         private bool showProbes = false;
         private bool showValues = false;
         private bool showNormals = false;
+        private bool showCentroid = false;
+        private bool antiAlias = false;
 
         public Profile Profile
         {
@@ -66,6 +68,18 @@ namespace NacaProfile
             set { showNormals = value; Invalidate(); }
         }
 
+        public bool ShowCentroid
+        {
+            get { return showCentroid; }
+            set { showCentroid = value; Invalidate(); }
+        }
+
+        public bool AntiAliasing
+        {
+            get { return antiAlias; }
+            set { antiAlias = value; Invalidate(); }
+        }
+
         public ProfilePanel()
         {
             DoubleBuffered = true;
@@ -84,8 +98,13 @@ namespace NacaProfile
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            if (antiAlias)
+                e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            else
+                e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
+
             e.Graphics.FillRectangle(Brushes.White, 0, 0, Width, Height);
+
             if (profile != null)
             {
                 DrawProfile(e.Graphics, profile);
@@ -191,6 +210,9 @@ namespace NacaProfile
                         g.FillPolygon(new SolidBrush(Color.FromArgb(125, Color.LightBlue)), segmentPoints.ToArray());
                 }
             }
+
+            // Draw centroid
+            if (showCentroid) DrawDot(g, Color.Black, ToScreenCoords(profile.Centroid), 3);
         }
 
         private PointF InterpolateFieldBorder(List<Segment> segments, int segment)
