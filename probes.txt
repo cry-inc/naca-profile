@@ -1,5 +1,15 @@
-﻿# position as index of profile points, normal point x, normal point y
-10 0.88 0.2
-20 0.38 0.2
-50 -0.1 0
-75 0.38 -0.2
+﻿# position as index of a profile points
+5
+10
+15
+20
+25
+30
+35
+45
+60
+70
+75
+80
+85
+90

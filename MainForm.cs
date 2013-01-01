@@ -31,6 +31,7 @@ namespace NacaProfile
         {
             Profile profile = new Profile("profile.txt", "probes.txt");
             profilePanel.Profile = profile;
+            profilePanel.SetDummyData((float)numericUpDown1.Value);
         }
 
         private void checkBoxFields_CheckedChanged(object sender, EventArgs e)
@@ -68,6 +69,11 @@ namespace NacaProfile
                 profilePanel.DrawToBitmap(bmp, new Rectangle(0, 0, profilePanel.Width, profilePanel.Height));
                 ((Image)bmp).Save(dialog.FileName);
             }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            profilePanel.SetDummyData((float)numericUpDown1.Value);
         }
     }
 }

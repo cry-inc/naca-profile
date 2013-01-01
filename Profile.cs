@@ -9,18 +9,18 @@ namespace NacaProfile
     class Probe
     {
         private int index;
-        private PointF normalPoint;
+        private VectorF normalVector;
 
         public int Index
         { get { return index; } }
 
-        public PointF NormalPoint
-        { get { return normalPoint; } }
+        public VectorF NormalVector
+        { get { return normalVector; } }
 
-        public Probe(int index, PointF normalPoint)
+        public Probe(int index, VectorF normalVector)
         {
             this.index = index;
-            this.normalPoint = normalPoint;
+            this.normalVector = normalVector;
         }
     }
 
@@ -80,15 +80,11 @@ namespace NacaProfile
             foreach (string line in lines)
             {
                 if (line.StartsWith("#")) continue;
-                string[] splitted = line.Split(' ');
-                if (splitted.Length != 3) continue;
                 int index;
-                double x, y;
-                if (!Int32.TryParse(splitted[0], out index)) continue;
+                if (!Int32.TryParse(line, out index)) continue;
                 if (index < 0 || index >= points.Count) continue;
-                if (!Double.TryParse(splitted[1], NumberStyles.Any, format, out x)) continue;
-                if (!Double.TryParse(splitted[2], NumberStyles.Any, format, out y)) continue;
-                probes.Add(new Probe(index, new PointF((float)x, (float)y)));
+                VectorF normalVector = EstimateNormalVector(index).Norm();
+                probes.Add(new Probe(index, normalVector));
             }
             return probes;
         }
@@ -118,7 +114,7 @@ namespace NacaProfile
             return points[pos];
         }
 
-        public PointF EstimateNormalVector(int index)
+        public VectorF EstimateNormalVector(int index)
         {
             if (index < 0 || index >= points.Count)
                 throw new IndexOutOfRangeException();
@@ -129,7 +125,7 @@ namespace NacaProfile
             float dx= pa.X - pb.X;
             float dy = pa.Y - pb.Y;
 
-            return new PointF(dy, -dx);
+            return new VectorF(dy, -dx);
         }
     }
 }
