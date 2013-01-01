@@ -39,6 +39,8 @@ namespace NacaProfile
         private bool showCentroid = false;
         private bool antiAlias = false;
         private FieldMode fieldMode = FieldMode.Polygon;
+        private float normalFactor = 0.15f;
+        private float valueFactor = 1.0f;
 
         public Profile Profile
         {
@@ -92,6 +94,18 @@ namespace NacaProfile
         {
             get { return fieldMode; }
             set { fieldMode = value; Invalidate(); }
+        }
+
+        public float NormalFactor
+        {
+            get { return normalFactor; }
+            set { normalFactor = value; Invalidate(); }
+        }
+
+        public float ValueFactor
+        {
+            get { return valueFactor; }
+            set { valueFactor = value; Invalidate(); }
         }
 
         public ProfilePanel()
@@ -182,7 +196,7 @@ namespace NacaProfile
             VectorF[] normals = new VectorF[profile.Probes.Count];
             for (int i = 0; i < profile.Probes.Count; i++)
             {
-                normals[i] = profile.Probes[i].NormalVector.Norm() * 0.15f;
+                normals[i] = profile.Probes[i].NormalVector.Norm() * normalFactor;
             }
             return normals;
         }
@@ -193,7 +207,7 @@ namespace NacaProfile
             for (int i = 0; i < profile.Probes.Count; i++)
             {
                 float value = 0;
-                if (data.Length > i) value = data[i];
+                if (data.Length > i) value = data[i] * valueFactor;
                 if (value < 0) value *= -1;
                 int index = profile.Probes[i].Index;
                 valuePoints[i] = ToScreenCoords(profile.Points[index] + normals[i] * value);

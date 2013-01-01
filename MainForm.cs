@@ -160,5 +160,15 @@ namespace NacaProfile
         {
             ParseData(data);
         }
+
+        private void trackBarNormals_ValueChanged(object sender, EventArgs e)
+        {
+            profilePanel.NormalFactor = trackBarNormals.Value / 1000f;
+        }
+
+        private void trackBarValues_ValueChanged(object sender, EventArgs e)
+        {
+            profilePanel.ValueFactor = trackBarValues.Value / 100f;
+        }
     }
 }

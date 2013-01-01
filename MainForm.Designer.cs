@@ -41,9 +41,15 @@
             this.checkBoxAntiAlias = new System.Windows.Forms.CheckBox();
             this.radioButtonPolygon = new System.Windows.Forms.RadioButton();
             this.radioButtonBezier = new System.Windows.Forms.RadioButton();
-            this.profilePanel = new NacaProfile.ProfilePanel();
             this.radioButtonSpline = new System.Windows.Forms.RadioButton();
+            this.trackBarNormals = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.trackBarValues = new System.Windows.Forms.TrackBar();
+            this.profilePanel = new NacaProfile.ProfilePanel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarNormals)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarValues)).BeginInit();
             this.SuspendLayout();
             // 
             // checkBoxNormals
@@ -92,9 +98,9 @@
             // 
             // richTextBoxValues
             // 
-            this.richTextBoxValues.Location = new System.Drawing.Point(610, 386);
+            this.richTextBoxValues.Location = new System.Drawing.Point(610, 441);
             this.richTextBoxValues.Name = "richTextBoxValues";
-            this.richTextBoxValues.Size = new System.Drawing.Size(127, 187);
+            this.richTextBoxValues.Size = new System.Drawing.Size(127, 132);
             this.richTextBoxValues.TabIndex = 5;
             this.richTextBoxValues.Text = "";
             // 
@@ -110,7 +116,7 @@
             // 
             // buttonExportPng
             // 
-            this.buttonExportPng.Location = new System.Drawing.Point(610, 338);
+            this.buttonExportPng.Location = new System.Drawing.Point(610, 412);
             this.buttonExportPng.Name = "buttonExportPng";
             this.buttonExportPng.Size = new System.Drawing.Size(130, 23);
             this.buttonExportPng.TabIndex = 7;
@@ -126,7 +132,7 @@
             0,
             0,
             65536});
-            this.numericUpDown1.Location = new System.Drawing.Point(693, 308);
+            this.numericUpDown1.Location = new System.Drawing.Point(693, 369);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10,
             0,
@@ -150,7 +156,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(607, 310);
+            this.label1.Location = new System.Drawing.Point(607, 371);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
             this.label1.TabIndex = 9;
@@ -202,23 +208,6 @@
             this.radioButtonBezier.UseVisualStyleBackColor = true;
             this.radioButtonBezier.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
-            // profilePanel
-            // 
-            this.profilePanel.AntiAliasing = false;
-            this.profilePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.profilePanel.Data = new float[0];
-            this.profilePanel.FieldMode = NacaProfile.FieldMode.Polygon;
-            this.profilePanel.Location = new System.Drawing.Point(4, 4);
-            this.profilePanel.Name = "profilePanel";
-            this.profilePanel.Profile = null;
-            this.profilePanel.ShowCentroid = false;
-            this.profilePanel.ShowField = false;
-            this.profilePanel.ShowNormals = false;
-            this.profilePanel.ShowProbes = false;
-            this.profilePanel.ShowValues = false;
-            this.profilePanel.Size = new System.Drawing.Size(600, 600);
-            this.profilePanel.TabIndex = 0;
-            // 
             // radioButtonSpline
             // 
             this.radioButtonSpline.AutoSize = true;
@@ -230,11 +219,76 @@
             this.radioButtonSpline.UseVisualStyleBackColor = true;
             this.radioButtonSpline.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
+            // trackBarNormals
+            // 
+            this.trackBarNormals.Location = new System.Drawing.Point(610, 253);
+            this.trackBarNormals.Maximum = 1000;
+            this.trackBarNormals.Minimum = 10;
+            this.trackBarNormals.Name = "trackBarNormals";
+            this.trackBarNormals.Size = new System.Drawing.Size(127, 42);
+            this.trackBarNormals.TabIndex = 15;
+            this.trackBarNormals.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBarNormals.Value = 100;
+            this.trackBarNormals.ValueChanged += new System.EventHandler(this.trackBarNormals_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(627, 237);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Normalenskalierung";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(627, 305);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 13);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Werteskalierung";
+            // 
+            // trackBarValues
+            // 
+            this.trackBarValues.Location = new System.Drawing.Point(610, 321);
+            this.trackBarValues.Maximum = 1000;
+            this.trackBarValues.Minimum = 10;
+            this.trackBarValues.Name = "trackBarValues";
+            this.trackBarValues.Size = new System.Drawing.Size(127, 42);
+            this.trackBarValues.TabIndex = 17;
+            this.trackBarValues.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBarValues.Value = 100;
+            this.trackBarValues.ValueChanged += new System.EventHandler(this.trackBarValues_ValueChanged);
+            // 
+            // profilePanel
+            // 
+            this.profilePanel.AntiAliasing = false;
+            this.profilePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.profilePanel.Data = new float[0];
+            this.profilePanel.FieldMode = NacaProfile.FieldMode.Polygon;
+            this.profilePanel.Location = new System.Drawing.Point(4, 4);
+            this.profilePanel.Name = "profilePanel";
+            this.profilePanel.NormalFactor = 0.15F;
+            this.profilePanel.Profile = null;
+            this.profilePanel.ShowCentroid = false;
+            this.profilePanel.ShowField = false;
+            this.profilePanel.ShowNormals = false;
+            this.profilePanel.ShowProbes = false;
+            this.profilePanel.ShowValues = false;
+            this.profilePanel.Size = new System.Drawing.Size(600, 600);
+            this.profilePanel.TabIndex = 0;
+            this.profilePanel.ValueFactor = 1F;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 607);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.trackBarValues);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.trackBarNormals);
             this.Controls.Add(this.radioButtonSpline);
             this.Controls.Add(this.radioButtonBezier);
             this.Controls.Add(this.radioButtonPolygon);
@@ -255,6 +309,8 @@
             this.Text = "Profilverteilung";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarNormals)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarValues)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,6 +333,10 @@
         private System.Windows.Forms.RadioButton radioButtonPolygon;
         private System.Windows.Forms.RadioButton radioButtonBezier;
         private System.Windows.Forms.RadioButton radioButtonSpline;
+        private System.Windows.Forms.TrackBar trackBarNormals;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TrackBar trackBarValues;
     }
 }
 
