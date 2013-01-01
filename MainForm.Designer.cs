@@ -103,7 +103,7 @@
             this.buttonValues.Name = "buttonValues";
             this.buttonValues.Size = new System.Drawing.Size(127, 25);
             this.buttonValues.TabIndex = 6;
-            this.buttonValues.Text = "Messwerte anzeigen";
+            this.buttonValues.Text = "Messwerte einlesen";
             this.buttonValues.UseVisualStyleBackColor = true;
             this.buttonValues.Click += new System.EventHandler(this.buttonValues_Click);
             // 
@@ -206,6 +206,7 @@
             this.profilePanel.AntiAliasing = false;
             this.profilePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.profilePanel.Data = new float[0];
+            this.profilePanel.FieldMode = NacaProfile.FieldMode.Polygon;
             this.profilePanel.Location = new System.Drawing.Point(4, 4);
             this.profilePanel.Name = "profilePanel";
             this.profilePanel.Profile = null;

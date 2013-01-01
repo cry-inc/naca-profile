@@ -1,4 +1,4 @@
-﻿# position as index of a profile points
+﻿# position as index of a profile point
 5
 10
 15

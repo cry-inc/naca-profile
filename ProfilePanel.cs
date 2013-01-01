@@ -48,7 +48,7 @@ namespace NacaProfile
         public float[] Data
         {
             get { return data; }
-            set { data = value; }
+            set { data = value; Invalidate(); }
         }
 
         public bool ShowField

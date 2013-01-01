@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace NacaProfile
 {
@@ -66,7 +67,33 @@ namespace NacaProfile
 
         private void buttonValues_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Noch nicht verfügbar!");
+            string text = richTextBoxValues.Text;
+            text = text.Replace(",", ".");
+            text = text.Replace(";", " ");
+            text = text.Replace("\n", " ");
+            text = text.Replace("\t", " ");
+            text = text.Replace("\r", " ");
+            string[] splitted = text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (splitted.Length != profilePanel.Profile.Probes.Count)
+            {
+                MessageBox.Show("Anzahl der Messwerte entspricht nicht der Anzahl der Messpunkte!", "Fehler!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            float[] data = new float[splitted.Length];
+            IFormatProvider format = CultureInfo.GetCultureInfo("en-US").NumberFormat;
+            for (int i = 0; i < splitted.Length; i++)
+            {
+                double tmp;
+                if (!Double.TryParse(splitted[i], NumberStyles.Any, format, out tmp))
+                {
+                    MessageBox.Show("Konnte " + splitted[i] + " nicht als Zahl interpretieren!", "Fehler!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                data[i] = (float)tmp;
+            }
+
+            profilePanel.Data = data;
         }
 
         private void buttonExportPng_Click(object sender, EventArgs e)
