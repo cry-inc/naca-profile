@@ -5,6 +5,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
+using System.Threading;
+using System.Net;
+using System.Net.Sockets;
 
 namespace NacaProfile
 {
@@ -19,8 +22,18 @@ namespace NacaProfile
      * - Anzeige Max/Min-Werte
      * - Negativ andere Farbe als Positiv
      */
+
+    enum ParseResult
+    {
+        Success,
+        InvalidCount,
+        InvalidFormat
+    }
+
     public partial class MainForm : Form
     {
+        private Thread udpThread;
+
         public MainForm()
         {
             InitializeComponent();
@@ -31,6 +44,10 @@ namespace NacaProfile
             Profile profile = new Profile("profile.txt", "probes.txt");
             profilePanel.Profile = profile;
             profilePanel.SetDummyData((float)numericUpDown1.Value);
+
+            udpThread = new Thread(new ThreadStart(UdpThread));
+            udpThread.IsBackground = true;
+            udpThread.Start();
         }
 
         private void checkBoxFields_CheckedChanged(object sender, EventArgs e)
@@ -66,6 +83,15 @@ namespace NacaProfile
         private void buttonValues_Click(object sender, EventArgs e)
         {
             string text = richTextBoxValues.Text;
+            ParseResult result = ParseData(text);
+            if (result == ParseResult.InvalidCount)
+                MessageBox.Show("Anzahl der Messwerte entspricht nicht der Anzahl der Messpunkte!", "Fehler!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else if (result == ParseResult.InvalidFormat)
+                MessageBox.Show("Konnte Daten nicht als Zahl interpretieren!", "Fehler!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private ParseResult ParseData(string text)
+        {
             text = text.Replace(",", ".");
             text = text.Replace(";", " ");
             text = text.Replace("\n", " ");
@@ -73,10 +99,7 @@ namespace NacaProfile
             text = text.Replace("\r", " ");
             string[] splitted = text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (splitted.Length != profilePanel.Profile.Probes.Count)
-            {
-                MessageBox.Show("Anzahl der Messwerte entspricht nicht der Anzahl der Messpunkte!", "Fehler!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                return ParseResult.InvalidCount;
 
             float[] data = new float[splitted.Length];
             IFormatProvider format = CultureInfo.GetCultureInfo("en-US").NumberFormat;
@@ -84,14 +107,12 @@ namespace NacaProfile
             {
                 double tmp;
                 if (!Double.TryParse(splitted[i], NumberStyles.Any, format, out tmp))
-                {
-                    MessageBox.Show("Konnte " + splitted[i] + " nicht als Zahl interpretieren!", "Fehler!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    return ParseResult.InvalidFormat;
                 data[i] = (float)tmp;
             }
 
             profilePanel.Data = data;
+            return ParseResult.Success;
         }
 
         private void buttonExportPng_Click(object sender, EventArgs e)
@@ -119,6 +140,25 @@ namespace NacaProfile
                 profilePanel.FieldMode = FieldMode.PSpline;
             else
                 profilePanel.FieldMode = FieldMode.Polygon;
+        }
+
+        private void UdpThread()
+        {
+            UdpClient udpClient = new UdpClient(10001);
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 10001);
+            while (true)
+            {
+                byte[] data = udpClient.Receive(ref endPoint);
+                string text = System.Text.ASCIIEncoding.ASCII.GetString(data);
+                Invoke(new StringDelegate(SetData), new object[] { text });
+            }
+        }
+
+        delegate void StringDelegate(string txt);
+
+        private void SetData(string data)
+        {
+            ParseData(data);
         }
     }
 }
