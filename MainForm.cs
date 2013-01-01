@@ -52,7 +52,7 @@ namespace NacaProfile
 
         private void checkBoxFields_CheckedChanged(object sender, EventArgs e)
         {
-            profilePanel.ShowField = checkBoxFields.Checked;
+            profilePanel.ShowFields = checkBoxFields.Checked;
         }
 
         private void checkBoxNormals_CheckedChanged(object sender, EventArgs e)

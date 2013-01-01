@@ -55,6 +55,8 @@
             // checkBoxNormals
             // 
             this.checkBoxNormals.AutoSize = true;
+            this.checkBoxNormals.Checked = true;
+            this.checkBoxNormals.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNormals.Location = new System.Drawing.Point(610, 35);
             this.checkBoxNormals.Name = "checkBoxNormals";
             this.checkBoxNormals.Size = new System.Drawing.Size(111, 17);
@@ -66,6 +68,8 @@
             // checkBoxProbes
             // 
             this.checkBoxProbes.AutoSize = true;
+            this.checkBoxProbes.Checked = true;
+            this.checkBoxProbes.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxProbes.Location = new System.Drawing.Point(610, 12);
             this.checkBoxProbes.Name = "checkBoxProbes";
             this.checkBoxProbes.Size = new System.Drawing.Size(130, 17);
@@ -77,6 +81,8 @@
             // checkBoxValues
             // 
             this.checkBoxValues.AutoSize = true;
+            this.checkBoxValues.Checked = true;
+            this.checkBoxValues.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxValues.Location = new System.Drawing.Point(610, 58);
             this.checkBoxValues.Name = "checkBoxValues";
             this.checkBoxValues.Size = new System.Drawing.Size(127, 17);
@@ -88,6 +94,8 @@
             // checkBoxFields
             // 
             this.checkBoxFields.AutoSize = true;
+            this.checkBoxFields.Checked = true;
+            this.checkBoxFields.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxFields.Location = new System.Drawing.Point(610, 81);
             this.checkBoxFields.Name = "checkBoxFields";
             this.checkBoxFields.Size = new System.Drawing.Size(101, 17);
@@ -176,6 +184,8 @@
             // checkBoxAntiAlias
             // 
             this.checkBoxAntiAlias.AutoSize = true;
+            this.checkBoxAntiAlias.Checked = true;
+            this.checkBoxAntiAlias.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 196);
             this.checkBoxAntiAlias.Name = "checkBoxAntiAlias";
             this.checkBoxAntiAlias.Size = new System.Drawing.Size(80, 17);
@@ -187,12 +197,10 @@
             // radioButtonPolygon
             // 
             this.radioButtonPolygon.AutoSize = true;
-            this.radioButtonPolygon.Checked = true;
             this.radioButtonPolygon.Location = new System.Drawing.Point(610, 104);
             this.radioButtonPolygon.Name = "radioButtonPolygon";
             this.radioButtonPolygon.Size = new System.Drawing.Size(117, 17);
             this.radioButtonPolygon.TabIndex = 12;
-            this.radioButtonPolygon.TabStop = true;
             this.radioButtonPolygon.Text = "Felder als Polygone";
             this.radioButtonPolygon.UseVisualStyleBackColor = true;
             this.radioButtonPolygon.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
@@ -211,10 +219,12 @@
             // radioButtonSpline
             // 
             this.radioButtonSpline.AutoSize = true;
+            this.radioButtonSpline.Checked = true;
             this.radioButtonSpline.Location = new System.Drawing.Point(610, 150);
             this.radioButtonSpline.Name = "radioButtonSpline";
             this.radioButtonSpline.Size = new System.Drawing.Size(114, 17);
             this.radioButtonSpline.TabIndex = 14;
+            this.radioButtonSpline.TabStop = true;
             this.radioButtonSpline.Text = "Felder als PSplines";
             this.radioButtonSpline.UseVisualStyleBackColor = true;
             this.radioButtonSpline.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
@@ -228,7 +238,7 @@
             this.trackBarNormals.Size = new System.Drawing.Size(127, 42);
             this.trackBarNormals.TabIndex = 15;
             this.trackBarNormals.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBarNormals.Value = 100;
+            this.trackBarNormals.Value = 150;
             this.trackBarNormals.ValueChanged += new System.EventHandler(this.trackBarNormals_ValueChanged);
             // 
             // label2
@@ -263,19 +273,18 @@
             // 
             // profilePanel
             // 
-            this.profilePanel.AntiAliasing = false;
+            this.profilePanel.AntiAliasing = true;
             this.profilePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.profilePanel.Data = new float[0];
-            this.profilePanel.FieldMode = NacaProfile.FieldMode.Polygon;
             this.profilePanel.Location = new System.Drawing.Point(4, 4);
             this.profilePanel.Name = "profilePanel";
             this.profilePanel.NormalFactor = 0.15F;
             this.profilePanel.Profile = null;
             this.profilePanel.ShowCentroid = false;
-            this.profilePanel.ShowField = false;
-            this.profilePanel.ShowNormals = false;
-            this.profilePanel.ShowProbes = false;
-            this.profilePanel.ShowValues = false;
+            this.profilePanel.ShowFields = true;
+            this.profilePanel.ShowNormals = true;
+            this.profilePanel.ShowProbes = true;
+            this.profilePanel.ShowValues = true;
             this.profilePanel.Size = new System.Drawing.Size(600, 600);
             this.profilePanel.TabIndex = 0;
             this.profilePanel.ValueFactor = 1F;

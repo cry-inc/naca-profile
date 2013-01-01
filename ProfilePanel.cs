@@ -32,13 +32,13 @@ namespace NacaProfile
         private Profile profile;
         private RectangleF rect = new RectangleF(-0.25f, -0.75f, 1.5f, 1.5f);
         private float[] data = new float[0];
-        private bool showFields = false;
-        private bool showProbes = false;
-        private bool showValues = false;
-        private bool showNormals = false;
+        private bool showFields = true;
+        private bool showProbes = true;
+        private bool showValues = true;
+        private bool showNormals = true;
         private bool showCentroid = false;
-        private bool antiAlias = false;
-        private FieldMode fieldMode = FieldMode.Polygon;
+        private bool antiAlias = true;
+        private FieldMode fieldMode = FieldMode.PSpline;
         private float normalFactor = 0.15f;
         private float valueFactor = 1.0f;
 
@@ -54,7 +54,7 @@ namespace NacaProfile
             set { data = value; Invalidate(); }
         }
 
-        public bool ShowField
+        public bool ShowFields
         {
             get { return showFields; }
             set { showFields = value; Invalidate(); }
