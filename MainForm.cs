@@ -42,6 +42,8 @@ namespace NacaProfile
             udpThread = new Thread(new ThreadStart(UdpThread));
             udpThread.IsBackground = true;
             udpThread.Start();
+
+            MouseWheel += new MouseEventHandler(ZoomHandler);
         }
 
         private void checkBoxFields_CheckedChanged(object sender, EventArgs e)
@@ -179,6 +181,18 @@ namespace NacaProfile
         {
             timerStatus.Enabled = false;
             panelStatus.BackColor = DefaultBackColor;
+        }
+
+        private void ZoomHandler(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            float centerX = profilePanel.Rectangle.Width * 0.5f + profilePanel.Rectangle.X;
+            float centerY = profilePanel.Rectangle.Height * 0.5f + profilePanel.Rectangle.Y;
+            float factor = (e.Delta < 0) ? 1.1f : 0.9f;
+            float newWidth = profilePanel.Rectangle.Width * factor;
+            float newHeight = profilePanel.Rectangle.Height * factor;
+            float newX = centerX - newWidth * 0.5f;
+            float newY = centerY - newHeight * 0.5f;
+            profilePanel.Rectangle = new RectangleF(newX, newY, newWidth, newHeight);
         }
     }
 }

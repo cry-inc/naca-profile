@@ -205,9 +205,9 @@
             this.radioButtonPolygon.AutoSize = true;
             this.radioButtonPolygon.Location = new System.Drawing.Point(610, 127);
             this.radioButtonPolygon.Name = "radioButtonPolygon";
-            this.radioButtonPolygon.Size = new System.Drawing.Size(117, 17);
+            this.radioButtonPolygon.Size = new System.Drawing.Size(128, 17);
             this.radioButtonPolygon.TabIndex = 12;
-            this.radioButtonPolygon.Text = "Felder als Polygone";
+            this.radioButtonPolygon.Text = "Felder als Polygonzug";
             this.radioButtonPolygon.UseVisualStyleBackColor = true;
             this.radioButtonPolygon.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
