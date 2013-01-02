@@ -276,6 +276,7 @@
             this.profilePanel.AntiAliasing = true;
             this.profilePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.profilePanel.Data = new float[0];
+            this.profilePanel.FieldMode = NacaProfile.FieldMode.PSpline;
             this.profilePanel.Location = new System.Drawing.Point(4, 4);
             this.profilePanel.Name = "profilePanel";
             this.profilePanel.NormalFactor = 0.15F;
@@ -313,7 +314,8 @@
             this.Controls.Add(this.checkBoxProbes);
             this.Controls.Add(this.checkBoxNormals);
             this.Controls.Add(this.profilePanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Profilverteilung";
             this.Load += new System.EventHandler(this.MainForm_Load);
