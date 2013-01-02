@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.checkBoxNormals = new System.Windows.Forms.CheckBox();
             this.checkBoxProbes = new System.Windows.Forms.CheckBox();
             this.checkBoxValues = new System.Windows.Forms.CheckBox();
@@ -47,6 +48,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.trackBarValues = new System.Windows.Forms.TrackBar();
             this.profilePanel = new NacaProfile.ProfilePanel();
+            this.checkBoxValuesText = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarNormals)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarValues)).BeginInit();
@@ -96,7 +98,7 @@
             this.checkBoxFields.AutoSize = true;
             this.checkBoxFields.Checked = true;
             this.checkBoxFields.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxFields.Location = new System.Drawing.Point(610, 81);
+            this.checkBoxFields.Location = new System.Drawing.Point(610, 104);
             this.checkBoxFields.Name = "checkBoxFields";
             this.checkBoxFields.Size = new System.Drawing.Size(101, 17);
             this.checkBoxFields.TabIndex = 4;
@@ -173,7 +175,7 @@
             // checkBoxCentroid
             // 
             this.checkBoxCentroid.AutoSize = true;
-            this.checkBoxCentroid.Location = new System.Drawing.Point(610, 173);
+            this.checkBoxCentroid.Location = new System.Drawing.Point(610, 196);
             this.checkBoxCentroid.Name = "checkBoxCentroid";
             this.checkBoxCentroid.Size = new System.Drawing.Size(111, 17);
             this.checkBoxCentroid.TabIndex = 10;
@@ -186,7 +188,7 @@
             this.checkBoxAntiAlias.AutoSize = true;
             this.checkBoxAntiAlias.Checked = true;
             this.checkBoxAntiAlias.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 196);
+            this.checkBoxAntiAlias.Location = new System.Drawing.Point(610, 219);
             this.checkBoxAntiAlias.Name = "checkBoxAntiAlias";
             this.checkBoxAntiAlias.Size = new System.Drawing.Size(80, 17);
             this.checkBoxAntiAlias.TabIndex = 11;
@@ -197,7 +199,7 @@
             // radioButtonPolygon
             // 
             this.radioButtonPolygon.AutoSize = true;
-            this.radioButtonPolygon.Location = new System.Drawing.Point(610, 104);
+            this.radioButtonPolygon.Location = new System.Drawing.Point(610, 127);
             this.radioButtonPolygon.Name = "radioButtonPolygon";
             this.radioButtonPolygon.Size = new System.Drawing.Size(117, 17);
             this.radioButtonPolygon.TabIndex = 12;
@@ -208,7 +210,7 @@
             // radioButtonBezier
             // 
             this.radioButtonBezier.AutoSize = true;
-            this.radioButtonBezier.Location = new System.Drawing.Point(610, 127);
+            this.radioButtonBezier.Location = new System.Drawing.Point(610, 150);
             this.radioButtonBezier.Name = "radioButtonBezier";
             this.radioButtonBezier.Size = new System.Drawing.Size(135, 17);
             this.radioButtonBezier.TabIndex = 13;
@@ -220,7 +222,7 @@
             // 
             this.radioButtonSpline.AutoSize = true;
             this.radioButtonSpline.Checked = true;
-            this.radioButtonSpline.Location = new System.Drawing.Point(610, 150);
+            this.radioButtonSpline.Location = new System.Drawing.Point(610, 173);
             this.radioButtonSpline.Name = "radioButtonSpline";
             this.radioButtonSpline.Size = new System.Drawing.Size(114, 17);
             this.radioButtonSpline.TabIndex = 14;
@@ -231,7 +233,7 @@
             // 
             // trackBarNormals
             // 
-            this.trackBarNormals.Location = new System.Drawing.Point(610, 253);
+            this.trackBarNormals.Location = new System.Drawing.Point(610, 262);
             this.trackBarNormals.Maximum = 1000;
             this.trackBarNormals.Minimum = 10;
             this.trackBarNormals.Name = "trackBarNormals";
@@ -244,7 +246,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(627, 237);
+            this.label2.Location = new System.Drawing.Point(627, 246);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 13);
             this.label2.TabIndex = 16;
@@ -253,7 +255,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(627, 305);
+            this.label3.Location = new System.Drawing.Point(627, 309);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 13);
             this.label3.TabIndex = 18;
@@ -261,7 +263,7 @@
             // 
             // trackBarValues
             // 
-            this.trackBarValues.Location = new System.Drawing.Point(610, 321);
+            this.trackBarValues.Location = new System.Drawing.Point(610, 325);
             this.trackBarValues.Maximum = 1000;
             this.trackBarValues.Minimum = 10;
             this.trackBarValues.Name = "trackBarValues";
@@ -281,20 +283,34 @@
             this.profilePanel.Name = "profilePanel";
             this.profilePanel.NormalFactor = 0.15F;
             this.profilePanel.Profile = null;
+            this.profilePanel.Rectangle = ((System.Drawing.RectangleF)(resources.GetObject("profilePanel.Rectangle")));
             this.profilePanel.ShowCentroid = false;
             this.profilePanel.ShowFields = true;
             this.profilePanel.ShowNormals = true;
             this.profilePanel.ShowProbes = true;
             this.profilePanel.ShowValues = true;
+            this.profilePanel.ShowValuesText = false;
             this.profilePanel.Size = new System.Drawing.Size(600, 600);
             this.profilePanel.TabIndex = 0;
             this.profilePanel.ValueFactor = 1F;
+            // 
+            // checkBoxValuesText
+            // 
+            this.checkBoxValuesText.AutoSize = true;
+            this.checkBoxValuesText.Location = new System.Drawing.Point(610, 81);
+            this.checkBoxValuesText.Name = "checkBoxValuesText";
+            this.checkBoxValuesText.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxValuesText.TabIndex = 19;
+            this.checkBoxValuesText.Text = "Messwerten anzeigen";
+            this.checkBoxValuesText.UseVisualStyleBackColor = true;
+            this.checkBoxValuesText.CheckedChanged += new System.EventHandler(this.checkBoxValuesText_CheckedChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 607);
+            this.Controls.Add(this.checkBoxValuesText);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.trackBarValues);
             this.Controls.Add(this.label2);
@@ -348,6 +364,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TrackBar trackBarValues;
+        private System.Windows.Forms.CheckBox checkBoxValuesText;
     }
 }
 

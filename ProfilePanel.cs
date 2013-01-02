@@ -276,11 +276,11 @@ namespace NacaProfile
                 DrawDot(g, pointColor, valuePoints[i], 2);
                 if (showValuesText)
                 {
-                    // TODO: Draw value as text?
                     PointF position = valuePoints[i];
-                    string str = data[i].ToString();
+                    position.X += 5;
+                    position.Y -= 5;
+                    string str = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:N}", data[i]);
                     g.DrawString(str, DefaultFont, new SolidBrush(textColor), position);
-                    
                 }
             }
         }

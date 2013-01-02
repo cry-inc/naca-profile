@@ -21,6 +21,7 @@ namespace NacaProfile
      * - Icon
      * - Anzeige Max/Min-Werte
      * - Zoom/Resize
+     * - Network Status
      */
 
     enum ParseResult
@@ -169,6 +170,11 @@ namespace NacaProfile
         private void trackBarValues_ValueChanged(object sender, EventArgs e)
         {
             profilePanel.ValueFactor = trackBarValues.Value / 100f;
+        }
+
+        private void checkBoxValuesText_CheckedChanged(object sender, EventArgs e)
+        {
+            profilePanel.ShowValuesText = checkBoxValuesText.Checked;
         }
     }
 }
