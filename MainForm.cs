@@ -27,6 +27,8 @@ namespace NacaProfile
     public partial class MainForm : Form
     {
         private Thread udpThread;
+        private Point mouseDownPos;
+        private bool mouseDown = false;
 
         public MainForm()
         {
@@ -146,7 +148,11 @@ namespace NacaProfile
             {
                 byte[] data = udpClient.Receive(ref endPoint);
                 string text = System.Text.ASCIIEncoding.ASCII.GetString(data);
-                Invoke(new StringDelegate(SetData), new object[] { text });
+                try
+                {
+                    Invoke(new StringDelegate(SetData), new object[] { text });
+                }
+                catch { }
             }
         }
 
@@ -193,6 +199,44 @@ namespace NacaProfile
             float newX = centerX - newWidth * 0.5f;
             float newY = centerY - newHeight * 0.5f;
             profilePanel.Rectangle = new RectangleF(newX, newY, newWidth, newHeight);
+        }
+
+        private void profilePanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            profilePanel.Focus();
+            mouseDownPos = e.Location;
+            mouseDown = true;
+        }
+
+        private void profilePanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown && e.Location != mouseDownPos)
+            {
+                float factorX = profilePanel.Rectangle.Width / profilePanel.Width;
+                float factorY = profilePanel.Rectangle.Height / profilePanel.Height;
+                float xd = (e.Location.X - mouseDownPos.X) * factorX;
+                float yd = (e.Location.Y - mouseDownPos.Y) * factorY;
+                PointF location = new PointF(
+                    profilePanel.Rectangle.X - xd,
+                    profilePanel.Rectangle.Y - yd
+                );
+                RectangleF rectangle = new RectangleF(
+                    location.X, location.Y,
+                    profilePanel.Rectangle.Width, profilePanel.Rectangle.Height
+                );
+                profilePanel.Rectangle = rectangle;
+                mouseDownPos = e.Location;
+            }
+        }
+
+        private void profilePanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+        private void MainForm_MouseLeave(object sender, EventArgs e)
+        {
+            mouseDown = false;
         }
     }
 }

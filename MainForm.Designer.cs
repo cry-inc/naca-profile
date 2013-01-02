@@ -330,6 +330,9 @@
             this.profilePanel.Size = new System.Drawing.Size(600, 600);
             this.profilePanel.TabIndex = 0;
             this.profilePanel.ValueFactor = 1F;
+            this.profilePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseDown);
+            this.profilePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseMove);
+            this.profilePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseUp);
             // 
             // MainForm
             // 
@@ -364,6 +367,8 @@
             this.Name = "MainForm";
             this.Text = "Profilverteilung";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MouseLeave += new System.EventHandler(this.MainForm_MouseLeave);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarNormals)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarValues)).EndInit();
