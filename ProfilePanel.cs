@@ -29,12 +29,14 @@ namespace NacaProfile
 
     class ProfilePanel : Panel
     {
+        private Dictionary<string, Color> colors = new Dictionary<string, Color>();
         private Profile profile;
         private RectangleF rect = new RectangleF(-0.25f, -0.75f, 1.5f, 1.5f);
         private float[] data = new float[0];
         private bool showFields = true;
         private bool showProbes = true;
         private bool showValues = true;
+        private bool showValuesText = false;
         private bool showNormals = true;
         private bool showCentroid = false;
         private bool antiAlias = true;
@@ -46,6 +48,12 @@ namespace NacaProfile
         {
             get { return profile; }
             set { profile = value; }
+        }
+
+        public RectangleF Rectangle
+        {
+            get { return rect; }
+            set { rect = value; Invalidate(); }
         }
 
         public float[] Data
@@ -70,6 +78,12 @@ namespace NacaProfile
         {
             get { return showValues; }
             set { showValues = value; Invalidate(); }
+        }
+
+        public bool ShowValuesText
+        {
+            get { return showValuesText; }
+            set { showValuesText = value; Invalidate(); }
         }
 
         public bool ShowNormals
@@ -112,6 +126,17 @@ namespace NacaProfile
         {
             DoubleBuffered = true;
             ResizeRedraw = true;
+            colors.Add("profile_bg", Color.LightGray);
+            colors.Add("profile_border", Color.Black);
+            colors.Add("probes", Color.Red);
+            colors.Add("normal_arrows", Color.Red);
+            colors.Add("value_points_positive", Color.Blue);
+            colors.Add("value_points_negative", Color.Red);
+            colors.Add("value_text_positive", Color.Black);
+            colors.Add("value_text_negative", Color.Black);
+            colors.Add("fields_positive", Color.LightBlue);
+            colors.Add("fields_negative", Color.LightPink);
+            colors.Add("centroid", Color.Black);
         }
 
         public void SetDummyData(float sinusIntervall)
@@ -145,7 +170,7 @@ namespace NacaProfile
                 if (showProbes) DrawProbes(e.Graphics, probePoints);
                 if (ShowNormals) DrawProbeNormals(e.Graphics, probePoints, probeNormals);
                 if (showValues) DrawValues(e.Graphics, valuePoints, data);
-                if (showCentroid) DrawDot(e.Graphics, Color.Black, ToScreenCoords(profile.Centroid), 3);
+                if (showCentroid) DrawDot(e.Graphics, colors["centroid"], ToScreenCoords(profile.Centroid), 3);
             }
         }
 
@@ -217,14 +242,14 @@ namespace NacaProfile
 
         private void DrawProfile(Graphics g, PointF[] profilePoints)
         {
-            g.FillPolygon(Brushes.Green, profilePoints);
-            g.DrawPolygon(Pens.Black, profilePoints);
+            g.FillPolygon(new SolidBrush(colors["profile_bg"]), profilePoints);
+            g.DrawPolygon(new Pen(colors["profile_border"]), profilePoints);
         }
 
         private void DrawProbes(Graphics g, PointF[] probePoints)
         {
             for (int i = 0; i < probePoints.Length; i++)
-                DrawDot(g, Color.Red, probePoints[i], 3);
+                DrawDot(g, colors["probes"], probePoints[i], 3);
         }
 
         private void DrawProbeNormals(Graphics g, PointF[] probePoints, VectorF[] normals)
@@ -233,7 +258,7 @@ namespace NacaProfile
             {
                 int index = profile.Probes[i].Index;
                 PointF normalPoint = profile.Points[index] + normals[i];
-                DrawArrow(g, Color.Red, probePoints[i], ToScreenCoords(normalPoint));
+                DrawArrow(g, colors["normal_arrows"], probePoints[i], ToScreenCoords(normalPoint));
             }
         }
 
@@ -241,8 +266,22 @@ namespace NacaProfile
         {
             for (int i = 0; i < profile.Probes.Count; i++)
             {
-                DrawDot(g, Color.Blue, valuePoints[i], 2);
-                // TODO: Draw value as text?
+                Color pointColor = colors["value_points_positive"];
+                Color textColor = colors["value_text_positive"];
+                if (data[i] < 0)
+                {
+                    pointColor = colors["value_points_negative"];
+                    textColor = colors["value_text_negative"];
+                }
+                DrawDot(g, pointColor, valuePoints[i], 2);
+                if (showValuesText)
+                {
+                    // TODO: Draw value as text?
+                    PointF position = valuePoints[i];
+                    string str = data[i].ToString();
+                    g.DrawString(str, DefaultFont, new SolidBrush(textColor), position);
+                    
+                }
             }
         }
 
@@ -275,9 +314,9 @@ namespace NacaProfile
 
         private void DrawFieldSegment(Graphics g, bool negative, PointF[] segmentPoints)
         {
-            Brush brush = new SolidBrush(Color.FromArgb(125, Color.LightBlue));
+            Brush brush = new SolidBrush(colors["fields_positive"]);
             if (negative)
-                brush = new SolidBrush(Color.FromArgb(125, Color.LightPink));
+                brush = new SolidBrush(colors["fields_negative"]);
 
             if (fieldMode == FieldMode.Bezier)
                 g.FillPolygon(brush, Bezier.CreateBezierPath(segmentPoints));

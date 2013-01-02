@@ -18,9 +18,9 @@ namespace NacaProfile
      * distribution: 2
      * 
      * TODO:
-     * - PNG-Export
+     * - Icon
      * - Anzeige Max/Min-Werte
-     * - Negativ andere Farbe als Positiv
+     * - Zoom/Resize
      */
 
     enum ParseResult
