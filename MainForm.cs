@@ -12,11 +12,6 @@ using System.Net.Sockets;
 namespace NacaProfile
 {
     /*
-     * http://www.ppart.de/aerodynamics/profiles/NACA4.html
-     * NACA4415
-     * points: 50
-     * distribution: 2
-     * 
      * TODO:
      * - Anzeige Max/Min-Werte
      * - Zoom/Resize
