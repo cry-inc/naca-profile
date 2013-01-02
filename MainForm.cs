@@ -159,7 +159,12 @@ namespace NacaProfile
 
         private void SetData(string data)
         {
-            ParseData(data);
+            ParseResult result = ParseData(data);
+            if (result == ParseResult.Success)
+                panelStatus.BackColor = Color.Green;
+            else
+                panelStatus.BackColor = Color.Red;
+            timerStatus.Enabled = true;
         }
 
         private void trackBarNormals_ValueChanged(object sender, EventArgs e)
@@ -175,6 +180,12 @@ namespace NacaProfile
         private void checkBoxValuesText_CheckedChanged(object sender, EventArgs e)
         {
             profilePanel.ShowValuesText = checkBoxValuesText.Checked;
+        }
+
+        private void timerStatus_Tick(object sender, EventArgs e)
+        {
+            timerStatus.Enabled = false;
+            panelStatus.BackColor = DefaultBackColor;
         }
     }
 }

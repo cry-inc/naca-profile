@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.checkBoxNormals = new System.Windows.Forms.CheckBox();
             this.checkBoxProbes = new System.Windows.Forms.CheckBox();
@@ -47,8 +48,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.trackBarValues = new System.Windows.Forms.TrackBar();
-            this.profilePanel = new NacaProfile.ProfilePanel();
             this.checkBoxValuesText = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panelStatus = new System.Windows.Forms.Panel();
+            this.timerStatus = new System.Windows.Forms.Timer(this.components);
+            this.profilePanel = new NacaProfile.ProfilePanel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarNormals)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarValues)).BeginInit();
@@ -110,13 +114,13 @@
             // 
             this.richTextBoxValues.Location = new System.Drawing.Point(610, 441);
             this.richTextBoxValues.Name = "richTextBoxValues";
-            this.richTextBoxValues.Size = new System.Drawing.Size(127, 132);
+            this.richTextBoxValues.Size = new System.Drawing.Size(127, 101);
             this.richTextBoxValues.TabIndex = 5;
             this.richTextBoxValues.Text = "";
             // 
             // buttonValues
             // 
-            this.buttonValues.Location = new System.Drawing.Point(610, 579);
+            this.buttonValues.Location = new System.Drawing.Point(610, 548);
             this.buttonValues.Name = "buttonValues";
             this.buttonValues.Size = new System.Drawing.Size(127, 25);
             this.buttonValues.TabIndex = 6;
@@ -273,6 +277,39 @@
             this.trackBarValues.Value = 100;
             this.trackBarValues.ValueChanged += new System.EventHandler(this.trackBarValues_ValueChanged);
             // 
+            // checkBoxValuesText
+            // 
+            this.checkBoxValuesText.AutoSize = true;
+            this.checkBoxValuesText.Location = new System.Drawing.Point(610, 81);
+            this.checkBoxValuesText.Name = "checkBoxValuesText";
+            this.checkBoxValuesText.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxValuesText.TabIndex = 19;
+            this.checkBoxValuesText.Text = "Messwerten anzeigen";
+            this.checkBoxValuesText.UseVisualStyleBackColor = true;
+            this.checkBoxValuesText.CheckedChanged += new System.EventHandler(this.checkBoxValuesText_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(610, 585);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(88, 13);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Netzwerk-Status:";
+            // 
+            // panelStatus
+            // 
+            this.panelStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelStatus.Location = new System.Drawing.Point(704, 584);
+            this.panelStatus.Name = "panelStatus";
+            this.panelStatus.Size = new System.Drawing.Size(16, 16);
+            this.panelStatus.TabIndex = 0;
+            // 
+            // timerStatus
+            // 
+            this.timerStatus.Interval = 500;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
+            // 
             // profilePanel
             // 
             this.profilePanel.AntiAliasing = true;
@@ -294,22 +331,13 @@
             this.profilePanel.TabIndex = 0;
             this.profilePanel.ValueFactor = 1F;
             // 
-            // checkBoxValuesText
-            // 
-            this.checkBoxValuesText.AutoSize = true;
-            this.checkBoxValuesText.Location = new System.Drawing.Point(610, 81);
-            this.checkBoxValuesText.Name = "checkBoxValuesText";
-            this.checkBoxValuesText.Size = new System.Drawing.Size(129, 17);
-            this.checkBoxValuesText.TabIndex = 19;
-            this.checkBoxValuesText.Text = "Messwerten anzeigen";
-            this.checkBoxValuesText.UseVisualStyleBackColor = true;
-            this.checkBoxValuesText.CheckedChanged += new System.EventHandler(this.checkBoxValuesText_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 607);
+            this.Controls.Add(this.panelStatus);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBoxValuesText);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.trackBarValues);
@@ -365,6 +393,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TrackBar trackBarValues;
         private System.Windows.Forms.CheckBox checkBoxValuesText;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panelStatus;
+        private System.Windows.Forms.Timer timerStatus;
     }
 }
 
