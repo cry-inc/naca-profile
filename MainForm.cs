@@ -18,10 +18,8 @@ namespace NacaProfile
      * distribution: 2
      * 
      * TODO:
-     * - Icon
      * - Anzeige Max/Min-Werte
      * - Zoom/Resize
-     * - Network Status
      */
 
     enum ParseResult
