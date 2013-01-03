@@ -189,7 +189,7 @@ namespace NacaProfile
         private PointF ToScreenCoords(PointF p)
         {
             float xd = Width / rect.Width;
-            float yd = Height / rect.Height;
+            float yd = xd; // Height / rect.Height;
             float ox = (0 - rect.X) * xd;
             float oy = (0 - rect.Y) * yd;
             return new PointF(p.X * xd + ox, -p.Y * yd + oy);
