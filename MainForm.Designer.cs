@@ -55,6 +55,7 @@
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.textBoxValueScale = new System.Windows.Forms.TextBox();
             this.textBoxNormalScale = new System.Windows.Forms.TextBox();
+            this.buttonNetwork = new System.Windows.Forms.Button();
             this.profilePanel = new NacaProfile.ProfilePanel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarNormals)).BeginInit();
@@ -68,8 +69,6 @@
             // checkBoxNormals
             // 
             this.checkBoxNormals.AutoSize = true;
-            this.checkBoxNormals.Checked = true;
-            this.checkBoxNormals.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNormals.Location = new System.Drawing.Point(3, 26);
             this.checkBoxNormals.Name = "checkBoxNormals";
             this.checkBoxNormals.Size = new System.Drawing.Size(111, 17);
@@ -300,14 +299,14 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(3, 576);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 13);
+            this.label4.Size = new System.Drawing.Size(55, 13);
             this.label4.TabIndex = 20;
-            this.label4.Text = "Netzwerk-Status:";
+            this.label4.Text = "Netzwerk:";
             // 
             // panelStatus
             // 
             this.panelStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelStatus.Location = new System.Drawing.Point(121, 575);
+            this.panelStatus.Location = new System.Drawing.Point(122, 574);
             this.panelStatus.Name = "panelStatus";
             this.panelStatus.Size = new System.Drawing.Size(16, 16);
             this.panelStatus.TabIndex = 0;
@@ -331,6 +330,7 @@
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.buttonNetwork);
             this.splitContainer.Panel2.Controls.Add(this.textBoxValueScale);
             this.splitContainer.Panel2.Controls.Add(this.textBoxNormalScale);
             this.splitContainer.Panel2.Controls.Add(this.checkBoxProbes);
@@ -377,6 +377,16 @@
             this.textBoxNormalScale.Text = "0.15";
             this.textBoxNormalScale.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScale_KeyPress);
             // 
+            // buttonNetwork
+            // 
+            this.buttonNetwork.Location = new System.Drawing.Point(58, 572);
+            this.buttonNetwork.Name = "buttonNetwork";
+            this.buttonNetwork.Size = new System.Drawing.Size(59, 20);
+            this.buttonNetwork.TabIndex = 23;
+            this.buttonNetwork.Text = "Ist an";
+            this.buttonNetwork.UseVisualStyleBackColor = true;
+            this.buttonNetwork.Click += new System.EventHandler(this.buttonNetwork_Click);
+            // 
             // profilePanel
             // 
             this.profilePanel.AntiAliasing = true;
@@ -390,7 +400,7 @@
             this.profilePanel.Profile = null;
             this.profilePanel.ShowCentroid = false;
             this.profilePanel.ShowFields = true;
-            this.profilePanel.ShowNormals = true;
+            this.profilePanel.ShowNormals = false;
             this.profilePanel.ShowProbes = true;
             this.profilePanel.ShowValues = true;
             this.profilePanel.ShowValuesText = false;
@@ -456,6 +466,7 @@
         private ProfilePanel profilePanel;
         private System.Windows.Forms.TextBox textBoxValueScale;
         private System.Windows.Forms.TextBox textBoxNormalScale;
+        private System.Windows.Forms.Button buttonNetwork;
     }
 }
 

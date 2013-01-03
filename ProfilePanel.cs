@@ -38,7 +38,7 @@ namespace NacaProfile
         private bool showProbes = true;
         private bool showValues = true;
         private bool showValuesText = false;
-        private bool showNormals = true;
+        private bool showNormals = false;
         private bool showCentroid = false;
         private bool antiAlias = true;
         private FieldMode fieldMode = FieldMode.PSpline;

@@ -14,7 +14,6 @@ namespace NacaProfile
     /*
      * TODO:
      * - Anzeige Max/Min-Werte
-     * - Netzwerk enable/disable
      * - Update Screenshot
      */
 
@@ -30,8 +29,9 @@ namespace NacaProfile
         private Thread udpThread;
         private Point mouseDownPos;
         private bool mouseDown = false;
-        IFormatProvider format = new CultureInfo("en-US");
-        NumberFormatInfo numberFormat = new CultureInfo("en-US").NumberFormat;
+        private bool networkEnabled = true;
+        private IFormatProvider format = new CultureInfo("en-US");
+        private NumberFormatInfo numberFormat = new CultureInfo("en-US").NumberFormat;
 
         public MainForm()
         {
@@ -162,6 +162,7 @@ namespace NacaProfile
 
         private void SetData(string data)
         {
+            if (!networkEnabled) return;
             ParseResult result = ParseData(data);
             if (result == ParseResult.Success)
                 panelStatus.BackColor = Color.Green;
@@ -252,6 +253,15 @@ namespace NacaProfile
                     MessageBox.Show("Ungültiger Wert!");
                 }
             }
+        }
+
+        private void buttonNetwork_Click(object sender, EventArgs e)
+        {
+            if (networkEnabled)
+                buttonNetwork.Text = "Ist aus";
+            else
+                buttonNetwork.Text = "Ist an";
+            networkEnabled = !networkEnabled; 
         }
     }
 }
