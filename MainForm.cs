@@ -15,7 +15,7 @@ namespace NacaProfile
      * TODO:
      * - Anzeige Max/Min-Werte
      * - Netzwerk enable/disable
-     * - Skalierung als Textbox
+     * - Update Screenshot
      */
 
     enum ParseResult
@@ -30,6 +30,8 @@ namespace NacaProfile
         private Thread udpThread;
         private Point mouseDownPos;
         private bool mouseDown = false;
+        IFormatProvider format = new CultureInfo("en-US");
+        NumberFormatInfo numberFormat = new CultureInfo("en-US").NumberFormat;
 
         public MainForm()
         {
@@ -101,11 +103,10 @@ namespace NacaProfile
                 return ParseResult.InvalidCount;
 
             float[] data = new float[splitted.Length];
-            IFormatProvider format = CultureInfo.GetCultureInfo("en-US").NumberFormat;
             for (int i = 0; i < splitted.Length; i++)
             {
                 double tmp;
-                if (!Double.TryParse(splitted[i], NumberStyles.Any, format, out tmp))
+                if (!Double.TryParse(splitted[i], NumberStyles.Any, numberFormat, out tmp))
                     return ParseResult.InvalidFormat;
                 data[i] = (float)tmp;
             }
@@ -171,12 +172,16 @@ namespace NacaProfile
 
         private void trackBarNormals_ValueChanged(object sender, EventArgs e)
         {
-            profilePanel.NormalFactor = trackBarNormals.Value / 1000f;
+            float factor = trackBarNormals.Value / 1000f;
+            profilePanel.NormalFactor = factor;
+            textBoxNormalScale.Text = factor.ToString(format);
         }
 
         private void trackBarValues_ValueChanged(object sender, EventArgs e)
         {
-            profilePanel.ValueFactor = trackBarValues.Value / 100f;
+            float factor = trackBarValues.Value / 100f;
+            profilePanel.ValueFactor = factor;
+            textBoxValueScale.Text = factor.ToString(format);
         }
 
         private void checkBoxValuesText_CheckedChanged(object sender, EventArgs e)
@@ -227,6 +232,26 @@ namespace NacaProfile
         private void MainForm_MouseLeave(object sender, EventArgs e)
         {
             mouseDown = false;
+        }
+
+        private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r')
+            {
+                string str = ((TextBox)sender).Text.Trim();
+                double factor = 1;
+                if (Double.TryParse(str, NumberStyles.Any, numberFormat, out factor))
+                {
+                    if (sender == textBoxValueScale)
+                        profilePanel.ValueFactor = (float)factor;
+                    else
+                        profilePanel.NormalFactor = (float)factor;
+                }
+                else
+                {
+                    MessageBox.Show("Ungültiger Wert!");
+                }
+            }
         }
     }
 }

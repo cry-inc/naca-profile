@@ -53,6 +53,8 @@
             this.panelStatus = new System.Windows.Forms.Panel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.textBoxValueScale = new System.Windows.Forms.TextBox();
+            this.textBoxNormalScale = new System.Windows.Forms.TextBox();
             this.profilePanel = new NacaProfile.ProfilePanel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarNormals)).BeginInit();
@@ -255,26 +257,26 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 237);
+            this.label2.Location = new System.Drawing.Point(0, 237);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 13);
+            this.label2.Size = new System.Drawing.Size(103, 13);
             this.label2.TabIndex = 16;
-            this.label2.Text = "Normalenskalierung";
+            this.label2.Text = "Normalenskalierung:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 300);
+            this.label3.Location = new System.Drawing.Point(0, 300);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 13);
+            this.label3.Size = new System.Drawing.Size(87, 13);
             this.label3.TabIndex = 18;
-            this.label3.Text = "Werteskalierung";
+            this.label3.Text = "Werteskalierung:";
             // 
             // trackBarValues
             // 
             this.trackBarValues.Location = new System.Drawing.Point(3, 316);
             this.trackBarValues.Maximum = 1000;
-            this.trackBarValues.Minimum = 10;
+            this.trackBarValues.Minimum = 1;
             this.trackBarValues.Name = "trackBarValues";
             this.trackBarValues.Size = new System.Drawing.Size(135, 42);
             this.trackBarValues.TabIndex = 17;
@@ -305,7 +307,7 @@
             // panelStatus
             // 
             this.panelStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelStatus.Location = new System.Drawing.Point(105, 575);
+            this.panelStatus.Location = new System.Drawing.Point(121, 575);
             this.panelStatus.Name = "panelStatus";
             this.panelStatus.Size = new System.Drawing.Size(16, 16);
             this.panelStatus.TabIndex = 0;
@@ -329,6 +331,8 @@
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.Controls.Add(this.textBoxValueScale);
+            this.splitContainer.Panel2.Controls.Add(this.textBoxNormalScale);
             this.splitContainer.Panel2.Controls.Add(this.checkBoxProbes);
             this.splitContainer.Panel2.Controls.Add(this.panelStatus);
             this.splitContainer.Panel2.Controls.Add(this.checkBoxNormals);
@@ -351,9 +355,27 @@
             this.splitContainer.Panel2.Controls.Add(this.radioButtonPolygon);
             this.splitContainer.Panel2.Controls.Add(this.checkBoxAntiAlias);
             this.splitContainer.Size = new System.Drawing.Size(722, 593);
-            this.splitContainer.SplitterDistance = 576;
+            this.splitContainer.SplitterDistance = 570;
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 21;
+            // 
+            // textBoxValueScale
+            // 
+            this.textBoxValueScale.Location = new System.Drawing.Point(105, 297);
+            this.textBoxValueScale.Name = "textBoxValueScale";
+            this.textBoxValueScale.Size = new System.Drawing.Size(34, 20);
+            this.textBoxValueScale.TabIndex = 22;
+            this.textBoxValueScale.Text = "1.0";
+            this.textBoxValueScale.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScale_KeyPress);
+            // 
+            // textBoxNormalScale
+            // 
+            this.textBoxNormalScale.Location = new System.Drawing.Point(105, 234);
+            this.textBoxNormalScale.Name = "textBoxNormalScale";
+            this.textBoxNormalScale.Size = new System.Drawing.Size(34, 20);
+            this.textBoxNormalScale.TabIndex = 21;
+            this.textBoxNormalScale.Text = "0.15";
+            this.textBoxNormalScale.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScale_KeyPress);
             // 
             // profilePanel
             // 
@@ -372,7 +394,7 @@
             this.profilePanel.ShowProbes = true;
             this.profilePanel.ShowValues = true;
             this.profilePanel.ShowValuesText = false;
-            this.profilePanel.Size = new System.Drawing.Size(576, 593);
+            this.profilePanel.Size = new System.Drawing.Size(570, 593);
             this.profilePanel.TabIndex = 1;
             this.profilePanel.ValueFactor = 1F;
             this.profilePanel.ViewCenter = ((System.Drawing.PointF)(resources.GetObject("profilePanel.ViewCenter")));
@@ -432,6 +454,8 @@
         private System.Windows.Forms.Timer timerStatus;
         private System.Windows.Forms.SplitContainer splitContainer;
         private ProfilePanel profilePanel;
+        private System.Windows.Forms.TextBox textBoxValueScale;
+        private System.Windows.Forms.TextBox textBoxNormalScale;
     }
 }
 
