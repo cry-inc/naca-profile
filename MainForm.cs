@@ -14,7 +14,6 @@ namespace NacaProfile
     /*
      * TODO:
      * - Anzeige Max/Min-Werte
-     * - Zoom/Resize
      */
 
     enum ParseResult

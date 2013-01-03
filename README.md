@@ -1,4 +1,4 @@
-NACA Profile Visialization Tool
+NACA Profile Visualization Tool
 ===============================
 
 ![Screenshot](https://raw.github.com/cry-inc/naca-profile/master/screenshot.png)
@@ -17,7 +17,7 @@ of the attached measurement probes. The number and order of the probes are impor
 The supplied data values must consist of the same number of measurement values.
 Also, the values must be in the same order as the probes.
 
-The data values for visialization can be supplied in two different ways:
+The data values for visualization can be supplied in two different ways:
 - Via the text box in the UI (sepereated by spaces, newlines or semicolons)
 - As UDP packets to port 10001, containing a ASCII string like described above
 
