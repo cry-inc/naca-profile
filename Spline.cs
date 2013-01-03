@@ -5,7 +5,7 @@ namespace NacaProfile
 {
     class Spline
     {
-        public static PointF[] CreateSplinePath(PointF[] points, int segments = 50)
+        public static PointF[] CreateSplinePath(PointF[] points, int segments = 70)
         {
             double[,] xy = new double[points.Length, 2];
             for (int i = 0; i < points.Length; i++)

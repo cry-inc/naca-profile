@@ -14,6 +14,8 @@ namespace NacaProfile
     /*
      * TODO:
      * - Anzeige Max/Min-Werte
+     * - Netzwerk enable/disable
+     * - Skalierung als Textbox
      */
 
     enum ParseResult

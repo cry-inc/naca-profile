@@ -121,7 +121,7 @@
             this.richTextBoxValues.Name = "richTextBoxValues";
             this.richTextBoxValues.Size = new System.Drawing.Size(135, 101);
             this.richTextBoxValues.TabIndex = 5;
-            this.richTextBoxValues.Text = "";
+            this.richTextBoxValues.Text = "21 -134 -261 -227 -58 196 328 490 -516 -629 -350 -248 -112 -8 56";
             // 
             // buttonValues
             // 
@@ -351,7 +351,7 @@
             this.splitContainer.Panel2.Controls.Add(this.radioButtonPolygon);
             this.splitContainer.Panel2.Controls.Add(this.checkBoxAntiAlias);
             this.splitContainer.Size = new System.Drawing.Size(722, 593);
-            this.splitContainer.SplitterDistance = 573;
+            this.splitContainer.SplitterDistance = 576;
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 21;
             // 
@@ -372,9 +372,11 @@
             this.profilePanel.ShowProbes = true;
             this.profilePanel.ShowValues = true;
             this.profilePanel.ShowValuesText = false;
-            this.profilePanel.Size = new System.Drawing.Size(573, 593);
+            this.profilePanel.Size = new System.Drawing.Size(576, 593);
             this.profilePanel.TabIndex = 1;
             this.profilePanel.ValueFactor = 1F;
+            this.profilePanel.ViewCenter = ((System.Drawing.PointF)(resources.GetObject("profilePanel.ViewCenter")));
+            this.profilePanel.ViewRadius = 1.5F;
             this.profilePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseDown);
             this.profilePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseMove);
             this.profilePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseUp);
