@@ -351,7 +351,7 @@
             this.splitContainer.Panel2.Controls.Add(this.radioButtonPolygon);
             this.splitContainer.Panel2.Controls.Add(this.checkBoxAntiAlias);
             this.splitContainer.Size = new System.Drawing.Size(722, 593);
-            this.splitContainer.SplitterDistance = 570;
+            this.splitContainer.SplitterDistance = 573;
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 21;
             // 
@@ -366,14 +366,13 @@
             this.profilePanel.Name = "profilePanel";
             this.profilePanel.NormalFactor = 0.15F;
             this.profilePanel.Profile = null;
-            this.profilePanel.Rectangle = ((System.Drawing.RectangleF)(resources.GetObject("profilePanel.Rectangle")));
             this.profilePanel.ShowCentroid = false;
             this.profilePanel.ShowFields = true;
             this.profilePanel.ShowNormals = true;
             this.profilePanel.ShowProbes = true;
             this.profilePanel.ShowValues = true;
             this.profilePanel.ShowValuesText = false;
-            this.profilePanel.Size = new System.Drawing.Size(570, 593);
+            this.profilePanel.Size = new System.Drawing.Size(573, 593);
             this.profilePanel.TabIndex = 1;
             this.profilePanel.ValueFactor = 1F;
             this.profilePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.profilePanel_MouseDown);

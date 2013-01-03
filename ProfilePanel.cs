@@ -31,7 +31,8 @@ namespace NacaProfile
     {
         private Dictionary<string, Color> colors = new Dictionary<string, Color>();
         private Profile profile;
-        private RectangleF rect = new RectangleF(-0.25f, -0.75f, 1.5f, 1.5f);
+        private PointF viewCenter = new PointF(0.5f, 0);
+        private float viewRadius = 1.5f;
         private float[] data = new float[0];
         private bool showFields = true;
         private bool showProbes = true;
@@ -50,10 +51,21 @@ namespace NacaProfile
             set { profile = value; }
         }
 
-        public RectangleF Rectangle
+        public PointF ViewCenter
         {
-            get { return rect; }
-            set { rect = value; Invalidate(); }
+            get { return viewCenter; }
+            set { viewCenter = value; Invalidate(); }
+        }
+
+        public float ViewRadius
+        {
+            get { return viewRadius; }
+            set { viewRadius = value; Invalidate(); }
+        }
+
+        public float UnitsPerPixel
+        {
+            get { return viewRadius / Math.Min(Width, Height); }
         }
 
         public float[] Data
@@ -188,8 +200,19 @@ namespace NacaProfile
 
         private PointF ToScreenCoords(PointF p)
         {
+            float unitsPerPixel = UnitsPerPixel;
+            float width = Width * unitsPerPixel;
+            float height = Height * unitsPerPixel;
+            
+            RectangleF rect = new RectangleF(
+                viewCenter.X - width / 2.0f,
+                viewCenter.Y - height / 2.0f,
+                width,
+                height
+            );
+
             float xd = Width / rect.Width;
-            float yd = xd; // Height / rect.Height;
+            float yd = Height / rect.Height;
             float ox = (0 - rect.X) * xd;
             float oy = (0 - rect.Y) * yd;
             return new PointF(p.X * xd + ox, -p.Y * yd + oy);

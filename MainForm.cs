@@ -190,14 +190,8 @@ namespace NacaProfile
 
         private void ZoomHandler(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            float centerX = profilePanel.Rectangle.Width * 0.5f + profilePanel.Rectangle.X;
-            float centerY = profilePanel.Rectangle.Height * 0.5f + profilePanel.Rectangle.Y;
             float factor = (e.Delta < 0) ? 1.1f : 0.9f;
-            float newWidth = profilePanel.Rectangle.Width * factor;
-            float newHeight = profilePanel.Rectangle.Height * factor;
-            float newX = centerX - newWidth * 0.5f;
-            float newY = centerY - newHeight * 0.5f;
-            profilePanel.Rectangle = new RectangleF(newX, newY, newWidth, newHeight);
+            profilePanel.ViewRadius *= factor;
         }
 
         private void profilePanel_MouseDown(object sender, MouseEventArgs e)
@@ -211,19 +205,14 @@ namespace NacaProfile
         {
             if (mouseDown && e.Location != mouseDownPos)
             {
-                float factorX = profilePanel.Rectangle.Width / profilePanel.Width;
-                float factorY = profilePanel.Rectangle.Height / profilePanel.Height;
-                float xd = (e.Location.X - mouseDownPos.X) * factorX;
-                float yd = (e.Location.Y - mouseDownPos.Y) * factorY;
-                PointF location = new PointF(
-                    profilePanel.Rectangle.X - xd,
-                    profilePanel.Rectangle.Y - yd
+                float factor = profilePanel.UnitsPerPixel;
+                float xd = (e.Location.X - mouseDownPos.X) * factor;
+                float yd = (e.Location.Y - mouseDownPos.Y) * factor;
+                PointF newCenter = new PointF(
+                    profilePanel.ViewCenter.X - xd,
+                    profilePanel.ViewCenter.Y - yd
                 );
-                RectangleF rectangle = new RectangleF(
-                    location.X, location.Y,
-                    profilePanel.Rectangle.Width, profilePanel.Rectangle.Height
-                );
-                profilePanel.Rectangle = rectangle;
+                profilePanel.ViewCenter = newCenter;
                 mouseDownPos = e.Location;
             }
         }
